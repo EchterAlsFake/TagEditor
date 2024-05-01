@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/style">
+        <file>stylesheets/stylesheet.qss</file>
+        <file>stylesheets/button_green.qss</file>
+        <file>stylesheets/button_orange.qss</file>
+        <file>stylesheets/button_purple.qss</file>
+        <file>stylesheets/button_blue.qss</file>
+        <file>stylesheets/progressbar.qss</file>
+    </qresource>
+</RCC>

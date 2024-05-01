@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1728</width>
+    <height>463</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Tag Editor (C) Johannes Habel GPLv3 v1.0 -- Source Code: https://github.com/EchterAlsFake/TagEditor</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_6">
+   <item row="0" column="0">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1708</width>
+        <height>443</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0">
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <widget class="QWidget" name="widget" native="true">
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="1">
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <widget class="QProgressBar" name="progressbar">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QPushButton" name="button_open_file">
+                <property name="text">
+                 <string>Open a file</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="button_open_directory">
+                <property name="text">
+                 <string>Open a directory</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="button_usage_guide">
+                <property name="text">
+                 <string>Usage Guide</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="1" column="1">
+             <widget class="QGroupBox" name="groupBox">
+              <property name="title">
+               <string>Editing...</string>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <layout class="QGridLayout" name="gridLayout">
+                 <item row="4" column="3">
+                  <widget class="QLineEdit" name="lineedit_publisher"/>
+                 </item>
+                 <item row="4" column="2">
+                  <widget class="QLabel" name="label_publisher">
+                   <property name="text">
+                    <string>Publisher:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="1" colspan="3">
+                  <widget class="QLineEdit" name="lineedit_comments"/>
+                 </item>
+                 <item row="6" column="0">
+                  <widget class="QLabel" name="label_track_number">
+                   <property name="text">
+                    <string>Track Number:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_title">
+                   <property name="text">
+                    <string>Title</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="2">
+                  <widget class="QLabel" name="label_description">
+                   <property name="text">
+                    <string>Description:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1">
+                  <widget class="QLineEdit" name="lineedit_genre"/>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QLabel" name="label_artist">
+                   <property name="text">
+                    <string>Artist</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLineEdit" name="lineedit_artist"/>
+                 </item>
+                 <item row="2" column="2">
+                  <widget class="QLabel" name="label_lyrics">
+                   <property name="text">
+                    <string>Lyrics:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QLabel" name="label_original_artist">
+                   <property name="text">
+                    <string>Original Artist:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QLabel" name="label_album">
+                   <property name="text">
+                    <string>Album</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="2">
+                  <widget class="QLabel" name="label_conductor">
+                   <property name="text">
+                    <string>Conductor:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLineEdit" name="lineedit_album_artist"/>
+                 </item>
+                 <item row="1" column="3">
+                  <widget class="QLineEdit" name="lineedit_original_artist"/>
+                 </item>
+                 <item row="5" column="3">
+                  <widget class="QPushButton" name="button_change_coverart">
+                   <property name="text">
+                    <string>Select</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="3">
+                  <widget class="QLineEdit" name="lineedit_description"/>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="label_album_artist">
+                   <property name="text">
+                    <string>Album Artist</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="6" column="1">
+                  <widget class="QLineEdit" name="lineedit_track_number"/>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLineEdit" name="lineedit_album"/>
+                 </item>
+                 <item row="5" column="0">
+                  <widget class="QLabel" name="label_genre">
+                   <property name="text">
+                    <string>Genre</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="3">
+                  <widget class="QPushButton" name="button_change_lyrics">
+                   <property name="text">
+                    <string>Change</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="0">
+                  <widget class="QLabel" name="label_comments">
+                   <property name="text">
+                    <string>Comments:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLineEdit" name="lineedit_title"/>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QLineEdit" name="lineedit_year"/>
+                 </item>
+                 <item row="3" column="3">
+                  <widget class="QLineEdit" name="lineedit_conductor"/>
+                 </item>
+                 <item row="0" column="3">
+                  <widget class="QLineEdit" name="lineedit_composer"/>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QLabel" name="label_composer">
+                   <property name="text">
+                    <string>Composer:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="0">
+                  <widget class="QLabel" name="label_year">
+                   <property name="text">
+                    <string>Year</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="2">
+                  <widget class="QLabel" name="label_cover_art">
+                   <property name="text">
+                    <string>Cover Art:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="8" column="0" colspan="2">
+                  <widget class="QPushButton" name="button_apply">
+                   <property name="text">
+                    <string>Apply</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="8" column="2" colspan="2">
+                  <widget class="QPushButton" name="button_edit_next">
+                   <property name="text">
+                    <string>Edit next file</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QTreeWidget" name="treeWidget">
+                <column>
+                 <property name="text">
+                  <string>Title</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Artist</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Album</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Edited?</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="2" column="0" colspan="2">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QLabel" name="label_ststus">
+                <property name="text">
+                 <string>Status:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineedit_status">
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_update">
+                <property name="text">
+                 <string>Update:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineedit_update">
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
