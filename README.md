@@ -5,6 +5,10 @@
 <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/EchterAlsFake/TagEditor/total?style=social&logo=github&logoColor=purple">
 <br>
 
+
+> [!IMPORTANT]
+> Still in development, do not use yet!
+
 ---
 
 **[<kbd><strong>&nbsp;<br>&nbsp;Download (v1.0)&nbsp;<br>&nbsp;</strong></kbd>](https://github.com/EchterAlsFake/TagEditor/releases/tag/1.0)** 
