@@ -1,1 +1,1 @@
-<img src="https://github.com/EchterAlsFake/TagEditor/blob/master/src/frontend/screenshots/1.png" alt="Porn Fetch Logo"/>
+<img src="https://github.com/EchterAlsFake/TagEditor/blob/4939d3efc7af72f37f2ec1e859de44815cf36fbf/src/screenshots/1.png" alt="Screenshot"/>
