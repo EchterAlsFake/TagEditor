@@ -3,10 +3,10 @@ name: Build GUI (Windows x64)
 on:
   pull_request:
     branches:
-      - master
+      - main
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-tageditor-gui-windows-x64:
