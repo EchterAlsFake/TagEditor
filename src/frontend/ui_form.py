@@ -32,7 +32,7 @@ class Ui_Form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1708, 443))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1694, 472))
         self.gridLayout_5 = QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.gridLayout_3 = QGridLayout()
@@ -78,168 +78,173 @@ class Ui_Form(object):
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
-        self.lineedit_publisher = QLineEdit(self.groupBox)
-        self.lineedit_publisher.setObjectName(u"lineedit_publisher")
+        self.lineedit_description = QLineEdit(self.groupBox)
+        self.lineedit_description.setObjectName(u"lineedit_description")
 
-        self.gridLayout.addWidget(self.lineedit_publisher, 4, 3, 1, 1)
+        self.gridLayout.addWidget(self.lineedit_description, 7, 3, 1, 1)
 
         self.label_publisher = QLabel(self.groupBox)
         self.label_publisher.setObjectName(u"label_publisher")
 
-        self.gridLayout.addWidget(self.label_publisher, 4, 2, 1, 1)
-
-        self.lineedit_comments = QLineEdit(self.groupBox)
-        self.lineedit_comments.setObjectName(u"lineedit_comments")
-
-        self.gridLayout.addWidget(self.lineedit_comments, 7, 1, 1, 3)
-
-        self.label_track_number = QLabel(self.groupBox)
-        self.label_track_number.setObjectName(u"label_track_number")
-
-        self.gridLayout.addWidget(self.label_track_number, 6, 0, 1, 1)
-
-        self.label_title = QLabel(self.groupBox)
-        self.label_title.setObjectName(u"label_title")
-
-        self.gridLayout.addWidget(self.label_title, 0, 0, 1, 1)
-
-        self.label_description = QLabel(self.groupBox)
-        self.label_description.setObjectName(u"label_description")
-
-        self.gridLayout.addWidget(self.label_description, 6, 2, 1, 1)
-
-        self.lineedit_genre = QLineEdit(self.groupBox)
-        self.lineedit_genre.setObjectName(u"lineedit_genre")
-
-        self.gridLayout.addWidget(self.lineedit_genre, 5, 1, 1, 1)
-
-        self.label_artist = QLabel(self.groupBox)
-        self.label_artist.setObjectName(u"label_artist")
-
-        self.gridLayout.addWidget(self.label_artist, 1, 0, 1, 1)
-
-        self.lineedit_artist = QLineEdit(self.groupBox)
-        self.lineedit_artist.setObjectName(u"lineedit_artist")
-
-        self.gridLayout.addWidget(self.lineedit_artist, 1, 1, 1, 1)
-
-        self.label_lyrics = QLabel(self.groupBox)
-        self.label_lyrics.setObjectName(u"label_lyrics")
-
-        self.gridLayout.addWidget(self.label_lyrics, 2, 2, 1, 1)
-
-        self.label_original_artist = QLabel(self.groupBox)
-        self.label_original_artist.setObjectName(u"label_original_artist")
-
-        self.gridLayout.addWidget(self.label_original_artist, 1, 2, 1, 1)
-
-        self.label_album = QLabel(self.groupBox)
-        self.label_album.setObjectName(u"label_album")
-
-        self.gridLayout.addWidget(self.label_album, 2, 0, 1, 1)
-
-        self.label_conductor = QLabel(self.groupBox)
-        self.label_conductor.setObjectName(u"label_conductor")
-
-        self.gridLayout.addWidget(self.label_conductor, 3, 2, 1, 1)
-
-        self.lineedit_album_artist = QLineEdit(self.groupBox)
-        self.lineedit_album_artist.setObjectName(u"lineedit_album_artist")
-
-        self.gridLayout.addWidget(self.lineedit_album_artist, 3, 1, 1, 1)
-
-        self.lineedit_original_artist = QLineEdit(self.groupBox)
-        self.lineedit_original_artist.setObjectName(u"lineedit_original_artist")
-
-        self.gridLayout.addWidget(self.lineedit_original_artist, 1, 3, 1, 1)
-
-        self.button_change_coverart = QPushButton(self.groupBox)
-        self.button_change_coverart.setObjectName(u"button_change_coverart")
-
-        self.gridLayout.addWidget(self.button_change_coverart, 5, 3, 1, 1)
-
-        self.lineedit_description = QLineEdit(self.groupBox)
-        self.lineedit_description.setObjectName(u"lineedit_description")
-
-        self.gridLayout.addWidget(self.lineedit_description, 6, 3, 1, 1)
-
-        self.label_album_artist = QLabel(self.groupBox)
-        self.label_album_artist.setObjectName(u"label_album_artist")
-
-        self.gridLayout.addWidget(self.label_album_artist, 3, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_publisher, 5, 2, 1, 1)
 
         self.lineedit_track_number = QLineEdit(self.groupBox)
         self.lineedit_track_number.setObjectName(u"lineedit_track_number")
 
-        self.gridLayout.addWidget(self.lineedit_track_number, 6, 1, 1, 1)
-
-        self.lineedit_album = QLineEdit(self.groupBox)
-        self.lineedit_album.setObjectName(u"lineedit_album")
-
-        self.gridLayout.addWidget(self.lineedit_album, 2, 1, 1, 1)
-
-        self.label_genre = QLabel(self.groupBox)
-        self.label_genre.setObjectName(u"label_genre")
-
-        self.gridLayout.addWidget(self.label_genre, 5, 0, 1, 1)
-
-        self.button_change_lyrics = QPushButton(self.groupBox)
-        self.button_change_lyrics.setObjectName(u"button_change_lyrics")
-
-        self.gridLayout.addWidget(self.button_change_lyrics, 2, 3, 1, 1)
-
-        self.label_comments = QLabel(self.groupBox)
-        self.label_comments.setObjectName(u"label_comments")
-
-        self.gridLayout.addWidget(self.label_comments, 7, 0, 1, 1)
+        self.gridLayout.addWidget(self.lineedit_track_number, 7, 1, 1, 1)
 
         self.lineedit_title = QLineEdit(self.groupBox)
         self.lineedit_title.setObjectName(u"lineedit_title")
 
-        self.gridLayout.addWidget(self.lineedit_title, 0, 1, 1, 1)
-
-        self.lineedit_year = QLineEdit(self.groupBox)
-        self.lineedit_year.setObjectName(u"lineedit_year")
-
-        self.gridLayout.addWidget(self.lineedit_year, 4, 1, 1, 1)
-
-        self.lineedit_conductor = QLineEdit(self.groupBox)
-        self.lineedit_conductor.setObjectName(u"lineedit_conductor")
-
-        self.gridLayout.addWidget(self.lineedit_conductor, 3, 3, 1, 1)
-
-        self.lineedit_composer = QLineEdit(self.groupBox)
-        self.lineedit_composer.setObjectName(u"lineedit_composer")
-
-        self.gridLayout.addWidget(self.lineedit_composer, 0, 3, 1, 1)
+        self.gridLayout.addWidget(self.lineedit_title, 1, 1, 1, 1)
 
         self.label_composer = QLabel(self.groupBox)
         self.label_composer.setObjectName(u"label_composer")
 
-        self.gridLayout.addWidget(self.label_composer, 0, 2, 1, 1)
+        self.gridLayout.addWidget(self.label_composer, 1, 2, 1, 1)
+
+        self.label_description = QLabel(self.groupBox)
+        self.label_description.setObjectName(u"label_description")
+
+        self.gridLayout.addWidget(self.label_description, 7, 2, 1, 1)
+
+        self.lineedit_album_artist = QLineEdit(self.groupBox)
+        self.lineedit_album_artist.setObjectName(u"lineedit_album_artist")
+
+        self.gridLayout.addWidget(self.lineedit_album_artist, 4, 1, 1, 1)
+
+        self.lineedit_composer = QLineEdit(self.groupBox)
+        self.lineedit_composer.setObjectName(u"lineedit_composer")
+
+        self.gridLayout.addWidget(self.lineedit_composer, 1, 3, 1, 1)
+
+        self.lineedit_conductor = QLineEdit(self.groupBox)
+        self.lineedit_conductor.setObjectName(u"lineedit_conductor")
+
+        self.gridLayout.addWidget(self.lineedit_conductor, 4, 3, 1, 1)
+
+        self.label_artist = QLabel(self.groupBox)
+        self.label_artist.setObjectName(u"label_artist")
+
+        self.gridLayout.addWidget(self.label_artist, 2, 0, 1, 1)
+
+        self.label_title = QLabel(self.groupBox)
+        self.label_title.setObjectName(u"label_title")
+
+        self.gridLayout.addWidget(self.label_title, 1, 0, 1, 1)
+
+        self.label_genre = QLabel(self.groupBox)
+        self.label_genre.setObjectName(u"label_genre")
+
+        self.gridLayout.addWidget(self.label_genre, 6, 0, 1, 1)
+
+        self.label_comments = QLabel(self.groupBox)
+        self.label_comments.setObjectName(u"label_comments")
+
+        self.gridLayout.addWidget(self.label_comments, 8, 0, 1, 1)
+
+        self.label_original_artist = QLabel(self.groupBox)
+        self.label_original_artist.setObjectName(u"label_original_artist")
+
+        self.gridLayout.addWidget(self.label_original_artist, 2, 2, 1, 1)
+
+        self.lineedit_album = QLineEdit(self.groupBox)
+        self.lineedit_album.setObjectName(u"lineedit_album")
+
+        self.gridLayout.addWidget(self.lineedit_album, 3, 1, 1, 1)
+
+        self.lineedit_artist = QLineEdit(self.groupBox)
+        self.lineedit_artist.setObjectName(u"lineedit_artist")
+
+        self.gridLayout.addWidget(self.lineedit_artist, 2, 1, 1, 1)
 
         self.label_year = QLabel(self.groupBox)
         self.label_year.setObjectName(u"label_year")
 
-        self.gridLayout.addWidget(self.label_year, 4, 0, 1, 1)
+        self.gridLayout.addWidget(self.label_year, 5, 0, 1, 1)
+
+        self.lineedit_original_artist = QLineEdit(self.groupBox)
+        self.lineedit_original_artist.setObjectName(u"lineedit_original_artist")
+
+        self.gridLayout.addWidget(self.lineedit_original_artist, 2, 3, 1, 1)
 
         self.label_cover_art = QLabel(self.groupBox)
         self.label_cover_art.setObjectName(u"label_cover_art")
 
-        self.gridLayout.addWidget(self.label_cover_art, 5, 2, 1, 1)
+        self.gridLayout.addWidget(self.label_cover_art, 6, 2, 1, 1)
+
+        self.label_album = QLabel(self.groupBox)
+        self.label_album.setObjectName(u"label_album")
+
+        self.gridLayout.addWidget(self.label_album, 3, 0, 1, 1)
+
+        self.label_lyrics = QLabel(self.groupBox)
+        self.label_lyrics.setObjectName(u"label_lyrics")
+
+        self.gridLayout.addWidget(self.label_lyrics, 3, 2, 1, 1)
+
+        self.button_change_coverart = QPushButton(self.groupBox)
+        self.button_change_coverart.setObjectName(u"button_change_coverart")
+
+        self.gridLayout.addWidget(self.button_change_coverart, 6, 3, 1, 1)
+
+        self.label_conductor = QLabel(self.groupBox)
+        self.label_conductor.setObjectName(u"label_conductor")
+
+        self.gridLayout.addWidget(self.label_conductor, 4, 2, 1, 1)
+
+        self.lineedit_comments = QLineEdit(self.groupBox)
+        self.lineedit_comments.setObjectName(u"lineedit_comments")
+
+        self.gridLayout.addWidget(self.lineedit_comments, 8, 1, 1, 3)
+
+        self.label_track_number = QLabel(self.groupBox)
+        self.label_track_number.setObjectName(u"label_track_number")
+
+        self.gridLayout.addWidget(self.label_track_number, 7, 0, 1, 1)
 
         self.button_apply = QPushButton(self.groupBox)
         self.button_apply.setObjectName(u"button_apply")
 
-        self.gridLayout.addWidget(self.button_apply, 8, 0, 1, 2)
+        self.gridLayout.addWidget(self.button_apply, 9, 0, 1, 2)
 
         self.button_edit_next = QPushButton(self.groupBox)
         self.button_edit_next.setObjectName(u"button_edit_next")
 
-        self.gridLayout.addWidget(self.button_edit_next, 8, 2, 1, 2)
+        self.gridLayout.addWidget(self.button_edit_next, 9, 2, 1, 2)
+
+        self.lineedit_publisher = QLineEdit(self.groupBox)
+        self.lineedit_publisher.setObjectName(u"lineedit_publisher")
+
+        self.gridLayout.addWidget(self.lineedit_publisher, 5, 3, 1, 1)
+
+        self.lineedit_year = QLineEdit(self.groupBox)
+        self.lineedit_year.setObjectName(u"lineedit_year")
+
+        self.gridLayout.addWidget(self.lineedit_year, 5, 1, 1, 1)
+
+        self.lineedit_genre = QLineEdit(self.groupBox)
+        self.lineedit_genre.setObjectName(u"lineedit_genre")
+
+        self.gridLayout.addWidget(self.lineedit_genre, 6, 1, 1, 1)
+
+        self.button_change_lyrics = QPushButton(self.groupBox)
+        self.button_change_lyrics.setObjectName(u"button_change_lyrics")
+
+        self.gridLayout.addWidget(self.button_change_lyrics, 3, 3, 1, 1)
+
+        self.label_album_artist = QLabel(self.groupBox)
+        self.label_album_artist.setObjectName(u"label_album_artist")
+
+        self.gridLayout.addWidget(self.label_album_artist, 4, 0, 1, 1)
+
+        self.label = QLabel(self.groupBox)
+        self.label.setObjectName(u"label")
+
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 4)
 
 
-        self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
+        self.gridLayout_2.addLayout(self.gridLayout, 1, 0, 1, 1)
 
 
         self.gridLayout_4.addWidget(self.groupBox, 1, 1, 1, 1)
@@ -291,6 +296,29 @@ class Ui_Form(object):
 
         self.gridLayout_6.addWidget(self.scrollArea, 0, 0, 1, 1)
 
+        QWidget.setTabOrder(self.scrollArea, self.button_open_file)
+        QWidget.setTabOrder(self.button_open_file, self.button_open_directory)
+        QWidget.setTabOrder(self.button_open_directory, self.button_usage_guide)
+        QWidget.setTabOrder(self.button_usage_guide, self.treeWidget)
+        QWidget.setTabOrder(self.treeWidget, self.lineedit_title)
+        QWidget.setTabOrder(self.lineedit_title, self.lineedit_composer)
+        QWidget.setTabOrder(self.lineedit_composer, self.lineedit_artist)
+        QWidget.setTabOrder(self.lineedit_artist, self.lineedit_original_artist)
+        QWidget.setTabOrder(self.lineedit_original_artist, self.lineedit_album)
+        QWidget.setTabOrder(self.lineedit_album, self.button_change_lyrics)
+        QWidget.setTabOrder(self.button_change_lyrics, self.lineedit_album_artist)
+        QWidget.setTabOrder(self.lineedit_album_artist, self.lineedit_conductor)
+        QWidget.setTabOrder(self.lineedit_conductor, self.lineedit_year)
+        QWidget.setTabOrder(self.lineedit_year, self.lineedit_publisher)
+        QWidget.setTabOrder(self.lineedit_publisher, self.lineedit_genre)
+        QWidget.setTabOrder(self.lineedit_genre, self.button_change_coverart)
+        QWidget.setTabOrder(self.button_change_coverart, self.lineedit_track_number)
+        QWidget.setTabOrder(self.lineedit_track_number, self.lineedit_description)
+        QWidget.setTabOrder(self.lineedit_description, self.lineedit_comments)
+        QWidget.setTabOrder(self.lineedit_comments, self.button_apply)
+        QWidget.setTabOrder(self.button_apply, self.button_edit_next)
+        QWidget.setTabOrder(self.button_edit_next, self.lineedit_status)
+        QWidget.setTabOrder(self.lineedit_status, self.lineedit_update)
 
         self.retranslateUi(Form)
 
@@ -304,26 +332,26 @@ class Ui_Form(object):
         self.button_usage_guide.setText(QCoreApplication.translate("Form", u"Usage Guide", None))
         self.groupBox.setTitle(QCoreApplication.translate("Form", u"Editing...", None))
         self.label_publisher.setText(QCoreApplication.translate("Form", u"Publisher:", None))
-        self.label_track_number.setText(QCoreApplication.translate("Form", u"Track Number:", None))
-        self.label_title.setText(QCoreApplication.translate("Form", u"Title", None))
-        self.label_description.setText(QCoreApplication.translate("Form", u"Description:", None))
-        self.label_artist.setText(QCoreApplication.translate("Form", u"Artist", None))
-        self.label_lyrics.setText(QCoreApplication.translate("Form", u"Lyrics:", None))
-        self.label_original_artist.setText(QCoreApplication.translate("Form", u"Original Artist:", None))
-        self.label_album.setText(QCoreApplication.translate("Form", u"Album", None))
-        self.label_conductor.setText(QCoreApplication.translate("Form", u"Conductor:", None))
-        self.button_change_coverart.setText(QCoreApplication.translate("Form", u"Select", None))
-        self.label_album_artist.setText(QCoreApplication.translate("Form", u"Album Artist", None))
-        self.label_genre.setText(QCoreApplication.translate("Form", u"Genre", None))
-        self.button_change_lyrics.setText(QCoreApplication.translate("Form", u"Change", None))
-        self.label_comments.setText(QCoreApplication.translate("Form", u"Comments:", None))
         self.label_composer.setText(QCoreApplication.translate("Form", u"Composer:", None))
-        self.label_year.setText(QCoreApplication.translate("Form", u"Year", None))
+        self.label_description.setText(QCoreApplication.translate("Form", u"Description:", None))
+        self.label_artist.setText(QCoreApplication.translate("Form", u"Artist:", None))
+        self.label_title.setText(QCoreApplication.translate("Form", u"Title:", None))
+        self.label_genre.setText(QCoreApplication.translate("Form", u"Genre:", None))
+        self.label_comments.setText(QCoreApplication.translate("Form", u"Comments:", None))
+        self.label_original_artist.setText(QCoreApplication.translate("Form", u"Original Artist:", None))
+        self.label_year.setText(QCoreApplication.translate("Form", u"Year:", None))
         self.label_cover_art.setText(QCoreApplication.translate("Form", u"Cover Art:", None))
+        self.label_album.setText(QCoreApplication.translate("Form", u"Album:", None))
+        self.label_lyrics.setText(QCoreApplication.translate("Form", u"Lyrics:", None))
+        self.button_change_coverart.setText(QCoreApplication.translate("Form", u"Select", None))
+        self.label_conductor.setText(QCoreApplication.translate("Form", u"Conductor:", None))
+        self.label_track_number.setText(QCoreApplication.translate("Form", u"Track Number:", None))
         self.button_apply.setText(QCoreApplication.translate("Form", u"Apply", None))
         self.button_edit_next.setText(QCoreApplication.translate("Form", u"Edit next file", None))
+        self.button_change_lyrics.setText(QCoreApplication.translate("Form", u"Change", None))
+        self.label_album_artist.setText(QCoreApplication.translate("Form", u"Album Artist:", None))
+        self.label.setText(QCoreApplication.translate("Form", u"Important: Not all file types support every attribute. You'll be able to write them, but if they don't show up after you edited them, it means it's not supported!", None))
         ___qtreewidgetitem = self.treeWidget.headerItem()
-        ___qtreewidgetitem.setText(3, QCoreApplication.translate("Form", u"Edited?", None));
         ___qtreewidgetitem.setText(2, QCoreApplication.translate("Form", u"Album", None));
         ___qtreewidgetitem.setText(1, QCoreApplication.translate("Form", u"Artist", None));
         ___qtreewidgetitem.setText(0, QCoreApplication.translate("Form", u"Title", None));

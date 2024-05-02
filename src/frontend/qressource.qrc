@@ -7,4 +7,8 @@
         <file>stylesheets/button_blue.qss</file>
         <file>stylesheets/progressbar.qss</file>
     </qresource>
+    <qresource prefix="/translations">
+        <file>translations/de_DE.qm</file>
+        <file>translations/en.qm</file>
+    </qresource>
 </RCC>

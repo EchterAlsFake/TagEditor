@@ -17,13 +17,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import src.frontend.ressources
 import os
+import requests
+import argparse
 
 from sys import argv
 from src.frontend.ui_form import Ui_Form
 
-from PySide6.QtCore import QCoreApplication, QTranslator, QRunnable, QThreadPool, QSemaphore, QFile, QTextStream, QObject, Signal, Qt
-from PySide6.QtWidgets import QApplication, QWidget, QMessageBox, QFileDialog, QTreeWidgetItem, QInputDialog
-from PySide6.QtGui import QIcon
+from PySide6.QtCore import (QCoreApplication, QTranslator, QRunnable, QThreadPool, QFile, QTextStream,QObject, Signal,
+                            Qt, QLocale)
+from PySide6.QtWidgets import (QApplication, QWidget, QMessageBox, QFileDialog, QTreeWidgetItem, QDialog,
+                               QVBoxLayout, QTextEdit, QDialogButtonBox)
+from PySide6.QtGui import QTextCursor
 
 from mutagen import File
 from mutagen.id3 import ID3, APIC
@@ -31,17 +35,36 @@ from mutagen.mp3 import MP3
 from mutagen.flac import FLAC, Picture, FLACNoHeaderError, error as flac_error
 from mutagen.mp4 import MP4, MP4Cover
 
-
-"""
-Global variables
-"""
 __author__ = "Johannes Habel"
 __version__ = "1.0"
+__next_release__ = "1.1"
 __license__ = "GPLv3"
 
-tags_to_be_written = ['title', 'artist', 'album', 'albumartist',
-        'date', 'genre', 'tracknumber', 'publisher'
-        'composer', 'originalartist', 'conductor', 'comments']
+
+class Setup(QRunnable):
+    """
+    Checks for an update and notifies the user if an update was found.
+    """
+
+    def __init__(self):
+        super(Setup, self).__init__()
+        self.signals = Signals()
+
+    def run(self):
+        try:
+            _ = requests.get(f"https://github.com/EchterAlsFake/TagEditor/releases/{__next_release__}")
+
+            if _.status_code == 200:
+                self.signals.signal_update_result.emit(True)
+
+            elif _.status_code == 404:
+                self.signals.signal_update_result.emit(False)
+
+            else:
+                print("Error checking for an update...")
+
+        except Exception as e:
+            print(f"Error checking for an update... {e}")
 
 
 class Signals(QObject):
@@ -52,6 +75,7 @@ class Signals(QObject):
     signal_start_undefined_range = Signal()
     signal_stop_undefined_range = Signal()
     signal_finished = Signal()
+    signal_update_result = Signal(bool)
 
 
 class LoadFiles(QRunnable):
@@ -85,38 +109,56 @@ class ReadTags(QRunnable):
             'originalartist', 'lyrics', 'conductor', 'comments']
 
     def run(self):
-        if not self.is_directory:
-            files = [self.file]
-
-        else:
-            files = self.file
-
+        files = [self.file] if not self.is_directory else self.file
         total_length = len(files)
 
         for idx, file in enumerate(files):
             try:
                 audio = File(file, easy=True)
-
-                if audio is None:
-                    self.signals.signal_error.emit(f"Error: File ({file}) is unsupported or not found")
-
-                else:
+                if audio:
                     tags = {tag: audio.get(tag, [''])[0] for tag in self.tags_to_extract}
-                    tags['idx'] = idx
-                    title = audio.get('title', [''])[0]
-
-                    if not title:
-                        title = os.path.splitext(os.path.basename(file))[0]
-
-                    tags['title'] = title
-                    tags["file_path"] = file
+                    title = tags['title'] if tags['title'] else os.path.splitext(os.path.basename(file))[0]
+                    tags.update({'title': title, 'idx': idx, "file_path": file})
                     self.signals.signal_progress.emit(idx, total_length)
                     self.signals.signal_read_tag.emit(tags)
 
+                else:
+                    self.signals.signal_error.emit(QCoreApplication.tr(f"Error: File ({file}) is "
+                                                                       f"unsupported or not found", None))
+
             except (FLACNoHeaderError, flac_error):
-                self.signals.signal_error.emit(f"Error: File: {file} is broken!")
+                self.signals.signal_error.emit(QCoreApplication.tr(f"Error: File: {file} is broken!", None))
 
         self.signals.signal_finished.emit()
+
+
+class LyricsInputDialog(QDialog):
+    def __init__(self, parent=None):
+        super(LyricsInputDialog, self).__init__(parent)
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Input Lyrics")
+        self.setGeometry(100, 100, 400, 300)
+        layout = QVBoxLayout()
+        self.textEdit = QTextEdit()
+        self.textEdit.setPlaceholderText("Enter lyrics here...")
+        layout.addWidget(self.textEdit)
+
+        self.buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.buttonBox.accepted.connect(self.accept)
+        self.buttonBox.rejected.connect(self.reject)
+        layout.addWidget(self.buttonBox)
+
+        self.setLayout(layout)
+
+    def getText(self):
+        return self.textEdit.toPlainText()
+
+    def showEvent(self, event):
+        super(LyricsInputDialog, self).showEvent(event)
+        self.textEdit.setFocus()
+        self.textEdit.moveCursor(QTextCursor.Start)
 
 
 class TagEditor(QWidget):
@@ -128,10 +170,9 @@ class TagEditor(QWidget):
         self.button_connectors()
 
         self.threadpool = QThreadPool()
-        self.semaphore = QSemaphore(5)
-
         self.last_index = 0
         self.current_item = None
+        self.setup()
 
     @classmethod
     def load_stylesheet(cls, path):
@@ -174,13 +215,29 @@ class TagEditor(QWidget):
         self.header.resizeSection(3, 100)
 
     def button_connectors(self):
-        self.ui.button_usage_guide.clicked.connect(self.usage_guide)
-        self.ui.button_change_coverart.clicked.connect(self.select_cover_art)
         self.ui.button_open_file.clicked.connect(self.load_tags_file)
         self.ui.button_open_directory.clicked.connect(self.load_tags_directory)
         self.ui.treeWidget.itemClicked.connect(self.edit_tags)
         self.ui.button_edit_next.clicked.connect(self.edit_next)
+        self.ui.button_change_coverart.clicked.connect(self.select_cover_art)
         self.ui.button_change_lyrics.clicked.connect(self.add_lyrics)
+        self.ui.button_apply.clicked.connect(self.apply_tags)
+        self.ui.button_usage_guide.clicked.connect(self.usage_guide)
+
+    def setup(self):
+        self.update_check = Setup()
+        self.update_check.signals.signal_update_result.connect(self.update_result)
+        self.threadpool.start(self.update_check)
+
+    def update_result(self, value):
+        found = QCoreApplication.tr( f"Version: {__next_release__} is out!", None)
+        not_found = QCoreApplication.tr( f"No update was found...", None)
+
+        if value:
+            self.ui.lineedit_update.setText(found)
+
+        else:
+            self.ui.lineedit_update.setText(not_found)
 
     def start_undefined_range(self):
         self.ui.progressbar.setRange(0, 0)
@@ -188,8 +245,33 @@ class TagEditor(QWidget):
     def stop_undefined_range(self):
         self.ui.progressbar.setRange(0, 1)
 
+    def update_progressbar(self, pos, total):
+        self.ui.progressbar.setValue(pos)
+        self.ui.progressbar.setMaximum(total)
+
+    def on_error(self, e):
+        self.ui_popup(e)
+
+    def edit_next(self):
+        self.last_index += 1
+        self.edit_tags(item=self.ui.treeWidget.topLevelItem(self.last_index))
+
+    def finished(self):
+        self.ui.progressbar.setValue(0)
+        self.ui.progressbar.setMaximum(100)
+        self.edit_tags(item=self.ui.treeWidget.topLevelItem(0))
+        self.ui.lineedit_status.clear()
+
     def load_tags_file(self):
-        file, type = QFileDialog().getOpenFileName()
+        file, type = QFileDialog().getOpenFileName(None, QCoreApplication.tr("Select a music file", None),
+                                                   "", "Audio Files (*.mp3 *.flac *.m4a *.ogg *.mp4 *.oga *.wav"
+                                                       " *.wma *.aiff *.aif *.ape *.mpc *.tta *.ofr *.ofs *.spx *.asf "
+                                                       "*.wv *.aac)")
+
+        if file is None or file == "":
+            self.ui_popup(QCoreApplication.tr(self,"No file was selected...", None))
+            return
+
         self.load_tags(path=file, is_directory=False)
 
     def load_tags_directory(self):
@@ -213,120 +295,58 @@ class TagEditor(QWidget):
         self.threadpool.start(self.read_tags_thread)
 
     def read_tags_signal(self, data):
-        # Collect tags from data dictionary and store in the global dictionary
-        TagEditor.tags_to_be_written = {key: data.get(key, '') for key in data.keys() if key != 'file_path'}
+        title = data.get("title")
+        artist = data.get("artist")
+        album = data.get("album")
+        albumartist = data.get("albumartist")
+        date = data.get("date")
+        genre = data.get("genre")
+        tracknumber = data.get("tracknumber")
+        publisher = data.get("publisher")
+        composer = data.get("composer")
+        originalartist = data.get("originalartist")
+        lyrics = data.get("lyrics")
+        conductor = data.get("conductor")
+        comments = data.get("comments")
+        idx = data.get("idx")
+        path = data.get("file_path")
 
-        # Create and update tree widget item with tag data
         item = QTreeWidgetItem(self.ui.treeWidget)
-        for idx, (tag, value) in enumerate(TagEditor.tags_to_be_written.items(), start=0):
-            item.setText(idx, f"{idx}) {value}")
-            item.setData(idx, Qt.UserRole, str(value))
-        item.setData(13, Qt.UserRole, data.get("file_path"))  # Set the file path separately
+        item.setText(0, f"{idx}) {title}")
+        item.setText(1, artist)
+        item.setText(2, album)
+        item.setText(3, "No")
 
-    def edit_tags(self, item, column):
+        item.setData(0, Qt.UserRole, str(title))
+        item.setData(1, Qt.UserRole, str(artist))
+        item.setData(2, Qt.UserRole, str(album))
+        item.setData(3, Qt.UserRole, str(albumartist))
+        item.setData(4, Qt.UserRole, str(date))
+        item.setData(5, Qt.UserRole, str(genre))
+        item.setData(6, Qt.UserRole, str(tracknumber))
+        item.setData(7, Qt.UserRole, str(publisher))
+        item.setData(8, Qt.UserRole, str(composer))
+        item.setData(9, Qt.UserRole, str(originalartist))
+        item.setData(10, Qt.UserRole, str(lyrics))
+        item.setData(11, Qt.UserRole, str(conductor))
+        item.setData(12, Qt.UserRole, str(comments))
+        item.setData(13, Qt.UserRole, str(path))
+
+    def edit_tags(self, item):
         self.current_item = item
         self.last_index = self.ui.treeWidget.indexOfTopLevelItem(item)
-
-        # Collect tags from item data and store in the global dictionary
-        TagEditor.tags_to_be_written = {
-            "title": item.data(0, Qt.UserRole),
-            "artist": item.data(1, Qt.UserRole),
-            "album": item.data(2, Qt.UserRole),
-            "albumartist": item.data(3, Qt.UserRole),
-            "year": item.data(4, Qt.UserRole),
-            "genre": item.data(5, Qt.UserRole),
-            "tracknumber": item.data(6, Qt.UserRole),
-            "publisher": item.data(7, Qt.UserRole),
-            "composer": item.data(8, Qt.UserRole),
-            "originalartist": item.data(9, Qt.UserRole),
-            "conductor": item.data(11, Qt.UserRole),
-            "comments": item.data(12, Qt.UserRole)
-        }
-
-        # Set the line edits to the values from the global dictionary
-        for tag, line_edit in zip(TagEditor.tags_to_be_written.keys(),
-                                  [self.ui.lineedit_title, self.ui.lineedit_artist, self.ui.lineedit_album,
-                                   self.ui.lineedit_album_artist, self.ui.lineedit_year, self.ui.lineedit_genre,
-                                   self.ui.lineedit_track_number, self.ui.lineedit_publisher, self.ui.lineedit_composer,
-                                   self.ui.lineedit_original_artist, self.ui.lineedit_conductor,
-                                   self.ui.lineedit_comments]):
-            line_edit.setText(TagEditor.tags_to_be_written[tag])
-
-    def edit_next(self):
-        self.last_index += 1
-        self.edit_tags(item=self.ui.treeWidget.topLevelItem(self.last_index), column=0)
-
-    def finished(self):
-        self.ui.progressbar.setValue(0)
-        self.ui.progressbar.setMaximum(100)
-        self.edit_tags(item=self.ui.treeWidget.topLevelItem(0), column=0)
-        self.ui.lineedit_status.clear()
-
-    def update_progressbar(self, pos, total):
-        self.ui.progressbar.setValue(pos)
-        self.ui.progressbar.setMaximum(total)
-
-    def on_error(self, e):
-        self.ui_popup(e)
-
-    def select_cover_art(self):
-        art_path, _ = QFileDialog.getOpenFileName(None, "Select Cover Art", "", "Image Files (*.png *.jpg *.jpeg)")
-        if not art_path:
-            return
-
-        if self.current_item is None:
-            print("No file selected")
-            return
-
-        file_path = self.current_item.data(13, Qt.UserRole)  # Annahme, dass dies der Pfad zur Datei ist
-
-        # Bestimme den Dateityp basierend auf der Dateierweiterung
-        ext = os.path.splitext(file_path)[1].lower()
-
-        if ext == '.mp3':
-            self.add_cover_art_mp3(file_path, art_path)
-        elif ext == '.flac':
-            self.add_cover_art_flac(file_path, art_path)
-        elif ext in ['.m4a', '.mp4']:
-            self.add_cover_art_m4a(file_path, art_path)
-        else:
-            print("Unsupported file format")
-
-    def add_cover_art_mp3(self, file_path, art_path):
-        audio = MP3(file_path, ID3=ID3)
-        try:
-            audio.add_tags()
-        except Exception as e:
-            pass
-
-        with open(art_path, "rb") as img_file:
-            img_data = img_file.read()
-            audio.tags.add(APIC(
-                encoding=3,
-                mime='image/jpeg',
-                type=3,  # Cover front
-                desc='Cover',
-                data=img_data
-            ))
-        audio.save()
-
-    def add_cover_art_flac(self, file_path, art_path):
-        audio = FLAC(file_path)
-        pic = Picture()
-        pic.type = 3
-        pic.mime = 'image/jpeg'
-        pic.desc = 'Cover'
-        with open(art_path, "rb") as img_file:
-            pic.data = img_file.read()
-        audio.add_picture(pic)
-        audio.save()
-
-    def add_cover_art_m4a(self, file_path, art_path):
-        audio = MP4(file_path)
-        with open(art_path, "rb") as img_file:
-            cover_data = img_file.read()
-        audio["covr"] = [MP4Cover(cover_data, imageformat=MP4Cover.FORMAT_JPEG)]
-        audio.save()
+        self.ui.lineedit_title.setText(item.data(0, Qt.UserRole))
+        self.ui.lineedit_artist.setText(item.data(1, Qt.UserRole))
+        self.ui.lineedit_album.setText(item.data(2, Qt.UserRole))
+        self.ui.lineedit_album_artist.setText(item.data(3, Qt.UserRole))
+        self.ui.lineedit_year.setText(item.data(4, Qt.UserRole))
+        self.ui.lineedit_genre.setText(item.data(5, Qt.UserRole))
+        self.ui.lineedit_track_number.setText(item.data(6, Qt.UserRole))
+        self.ui.lineedit_publisher.setText(item.data(7, Qt.UserRole))
+        self.ui.lineedit_composer.setText(item.data(8, Qt.UserRole))
+        self.ui.lineedit_original_artist.setText(item.data(9, Qt.UserRole))
+        self.ui.lineedit_conductor.setText(item.data(11, Qt.UserRole))
+        self.ui.lineedit_comments.setText(item.data(12, Qt.UserRole))
 
     def apply_tags(self):
         # Collect tags from UI inputs and store in the global dictionary
@@ -347,12 +367,90 @@ class TagEditor(QWidget):
         }
 
         # Use the Mutagen library to write the tags
-        file = self.current_item.data[14]
+        file = self.current_item.data(13, Qt.UserRole)
         audio = File(file, easy=True)
         for tag, value in TagEditor.tags_to_be_written.items():
             if value:  # Only update tags that have been provided
                 audio[tag] = value
         audio.save()
+        self.ui.lineedit_status.setText(QCoreApplication.tr("Tags have been written: ✔", ""))
+
+    def select_cover_art(self):
+        art_path, _ = QFileDialog.getOpenFileName(None, QCoreApplication.tr("Select Cover Art",
+                                                                              None), "",
+                                                  "Image Files (*.png *.jpg *.jpeg)")
+        if not art_path:
+            return
+
+        if self.current_item is None:
+            self.ui_popup(QCoreApplication.tr("No file was selected...", None))
+            return
+
+        file_path = self.current_item.data(13, Qt.UserRole)
+        ext = os.path.splitext(file_path)[1].lower()
+
+        if ext == '.mp3':
+            self.add_cover_art_mp3(file_path, art_path)
+        elif ext == '.flac':
+            self.add_cover_art_flac(file_path, art_path)
+        elif ext in ['.m4a', '.mp4']:
+            self.add_cover_art_m4a(file_path, art_path)
+        else:
+            self.ui_popup(QCoreApplication.tr("Unsupported file format!, only mp3, mp4, flac and m4a support"
+                                                "cover images!", None))
+
+    @classmethod
+    def add_cover_art_mp3(cls, file_path, art_path):
+        audio = MP3(file_path, ID3=ID3)
+        try:
+            audio.add_tags()
+        except Exception:
+            pass
+
+        with open(art_path, "rb") as img_file:
+            img_data = img_file.read()
+            audio.tags.add(APIC(
+                encoding=3,
+                mime='image/jpeg',
+                type=3,  # Cover front
+                desc='Cover',
+                data=img_data
+            ))
+        audio.save()
+
+    @classmethod
+    def add_cover_art_flac(cls, file_path, art_path):
+        audio = FLAC(file_path)
+        pic = Picture()
+        pic.type = 3
+        pic.mime = 'image/jpeg'
+        pic.desc = 'Cover'
+        with open(art_path, "rb") as img_file:
+            pic.data = img_file.read()
+        audio.add_picture(pic)
+        audio.save()
+
+    @classmethod
+    def add_cover_art_m4a(cls, file_path, art_path):
+        audio = MP4(file_path)
+        with open(art_path, "rb") as img_file:
+            cover_data = img_file.read()
+        audio["covr"] = [MP4Cover(cover_data, imageformat=MP4Cover.FORMAT_JPEG)]
+        audio.save()
+
+    def add_lyrics(self):
+        item = self.current_item
+        path = item.data(13, Qt.UserRole)
+        file = File(path, easy=True)
+
+        dialog = LyricsInputDialog()
+        if dialog.exec() == QDialog.Accepted:
+            lyrics = dialog.getText()
+            file.tags["lyrics"] = lyrics
+
+        file.save()
+        self.ui_popup(QCoreApplication.tr("Lyrics have been updated. Please note, that not all audio "
+                                                "codecs support embedded lyrics.", ""))
 
     @classmethod
     def ui_popup(cls, text):
@@ -361,13 +459,13 @@ class TagEditor(QWidget):
         message_box.exec()
 
     def usage_guide(self):
-        self.ui_popup(QCoreApplication.tr(
-"""
+        self.ui_popup(QCoreApplication.tr(self,
+            """
 Click on 'Open File' to open a music file or 'Open Directory' to open a directory (and their subdirectories).
 All files found will be listed in the tree widget (the thing in the left).
 
 You can click on a song their and edit the metadata on the right. After you are done, click on 'Apply' to apply the tags.
-Note: The Lyrics and the Cover Art will be immeditately applied, when you select them.
+Note: The Lyrics and the Cover Art will be immediately applied, when you select them.
 
 Tag Editor supports the following file formats:
 
@@ -379,14 +477,36 @@ MP3,FLAC,M4A,OGG,WAV,WMA,AIFF,APE,MPC,TrueAudio (TTA), OptimFROG, Speex, ASF, WV
 If you experience any issues, please let me know :)
 """, None))
 
-    def add_lyrics(self):
-        input_dialog, ok = QInputDialog().getText(self, "Add Lyrics", "Add lyrics")
-        print(input_dialog)
-
-
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-fe", "--force_english", action="store_true", help="Forces the application to load in english language")
     app = QApplication(argv)
+    app.setStyle("Fusion")
+    args = parser.parse_args()
+
+    if args.force_english:
+        language_code = "en"
+
+    else:
+        locale = QLocale.system()
+        language_code = locale.name()
+
+    path = f":/translations/translations/{language_code}.qm"
+    translator = QTranslator(app)
+    if translator.load(path):
+        print(f"Loaded: {language_code} translation")
+
+    else:
+        # Try loading a more general translation if specific one fails
+        general_language_code = language_code.split('_')[0]
+        path = f":/translations/translations/{general_language_code}.qm"
+        if translator.load(path):
+            print(f"{general_language_code} translation loaded as fallback")
+        else:
+            print(f"Failed to load {language_code} translation")
+
+    app.installTranslator(translator)
 
     file = QFile(":/style/stylesheets/stylesheet.qss")
     file.open(QFile.ReadOnly | QFile.Text)
@@ -396,6 +516,7 @@ def main():
     w = TagEditor()
     w.show()
     app.exec()
+
 
 if __name__ == "__main__":
     main()
