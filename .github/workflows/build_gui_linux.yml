@@ -3,11 +3,10 @@ name: Build GUI (Linux x64)
 on:
   pull_request:
     branches:
-      - master
+      - main
   push:
     branches:
-      - master
-
+      - main
 
 jobs:
   build-tageditor-gui-linux-x64:
