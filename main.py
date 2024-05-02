@@ -16,21 +16,32 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
 import src.frontend.ressources
-
-from sys import argv
 import os
 
-from PySide6.QtCore import QCoreApplication, QTranslator, QRunnable, QThreadPool, QSemaphore, QFile, QTextStream, QObject, Signal, Qt
-from PySide6.QtWidgets import QApplication, QWidget, QMessageBox, QFileDialog, QTreeWidgetItem
-from PySide6.QtGui import QIcon, QFont
-
+from sys import argv
 from src.frontend.ui_form import Ui_Form
+
+from PySide6.QtCore import QCoreApplication, QTranslator, QRunnable, QThreadPool, QSemaphore, QFile, QTextStream, QObject, Signal, Qt
+from PySide6.QtWidgets import QApplication, QWidget, QMessageBox, QFileDialog, QTreeWidgetItem, QInputDialog
+from PySide6.QtGui import QIcon
 
 from mutagen import File
 from mutagen.id3 import ID3, APIC
 from mutagen.mp3 import MP3
 from mutagen.flac import FLAC, Picture, FLACNoHeaderError, error as flac_error
 from mutagen.mp4 import MP4, MP4Cover
+
+
+"""
+Global variables
+"""
+__author__ = "Johannes Habel"
+__version__ = "1.0"
+__license__ = "GPLv3"
+
+tags_to_be_written = ['title', 'artist', 'album', 'albumartist',
+        'date', 'genre', 'tracknumber', 'publisher'
+        'composer', 'originalartist', 'conductor', 'comments']
 
 
 class Signals(QObject):
@@ -70,10 +81,8 @@ class ReadTags(QRunnable):
         self.file = file
         self.is_directory = is_directory
         self.tags_to_extract = [
-            'title', 'artist', 'album', 'albumartist',
-            'date', 'genre', 'tracknumber', 'publisher',
-            'composer', 'originalartist', 'lyrics',
-            'conductor', 'comments']
+            'title', 'artist', 'album', 'albumartist', 'date', 'genre', 'tracknumber', 'publisher', 'composer',
+            'originalartist', 'lyrics', 'conductor', 'comments']
 
     def run(self):
         if not self.is_directory:
@@ -171,6 +180,7 @@ class TagEditor(QWidget):
         self.ui.button_open_directory.clicked.connect(self.load_tags_directory)
         self.ui.treeWidget.itemClicked.connect(self.edit_tags)
         self.ui.button_edit_next.clicked.connect(self.edit_next)
+        self.ui.button_change_lyrics.clicked.connect(self.add_lyrics)
 
     def start_undefined_range(self):
         self.ui.progressbar.setRange(0, 0)
@@ -203,79 +213,44 @@ class TagEditor(QWidget):
         self.threadpool.start(self.read_tags_thread)
 
     def read_tags_signal(self, data):
-        """
-        'title', 'artist', 'album', 'albumartist',
-        'date', 'genre', 'tracknumber', 'publisher',
-        'composer', 'originalartist', 'lyrics',
-        'conductor', 'comments']
-        """
+        # Collect tags from data dictionary and store in the global dictionary
+        TagEditor.tags_to_be_written = {key: data.get(key, '') for key in data.keys() if key != 'file_path'}
 
-        title = data.get("title")
-        artist = data.get("artist")
-        album = data.get("album")
-        albumartist = data.get("albumartist")
-        date = data.get("date")
-        genre = data.get("genre")
-        tracknumber = data.get("tracknumber")
-        publisher = data.get("publisher")
-        composer = data.get("composer")
-        originalartist = data.get("originalartist")
-        lyrics = data.get("lyrics")
-        conductor = data.get("conductor")
-        comments = data.get("comments")
-        idx = data.get("idx")
-        path = data.get("file_path")
-
+        # Create and update tree widget item with tag data
         item = QTreeWidgetItem(self.ui.treeWidget)
-        item.setText(0, f"{idx}) {title}")
-        item.setText(1, artist)
-        item.setText(2, album)
-        item.setText(3, "No")
-
-        item.setData(0, Qt.UserRole, str(title))
-        item.setData(1, Qt.UserRole, str(artist))
-        item.setData(2, Qt.UserRole, str(album))
-        item.setData(3, Qt.UserRole, str(albumartist))
-        item.setData(4, Qt.UserRole, str(date))
-        item.setData(5, Qt.UserRole, str(genre))
-        item.setData(6, Qt.UserRole, str(tracknumber))
-        item.setData(7, Qt.UserRole, str(publisher))
-        item.setData(8, Qt.UserRole, str(composer))
-        item.setData(9, Qt.UserRole, str(originalartist))
-        item.setData(10, Qt.UserRole, str(lyrics))
-        item.setData(11, Qt.UserRole, str(conductor))
-        item.setData(12, Qt.UserRole, str(comments))
-        item.setData(13, Qt.UserRole, str(path))
+        for idx, (tag, value) in enumerate(TagEditor.tags_to_be_written.items(), start=0):
+            item.setText(idx, f"{idx}) {value}")
+            item.setData(idx, Qt.UserRole, str(value))
+        item.setData(13, Qt.UserRole, data.get("file_path"))  # Set the file path separately
 
     def edit_tags(self, item, column):
         self.current_item = item
         self.last_index = self.ui.treeWidget.indexOfTopLevelItem(item)
-        title = item.data(0, Qt.UserRole)
-        artist = item.data(1, Qt.UserRole)
-        album = item.data(2, Qt.UserRole)
-        albumartist = item.data(3, Qt.UserRole)
-        date = item.data(4, Qt.UserRole)
-        genre = item.data(5, Qt.UserRole)
-        tracknumber = item.data(6, Qt.UserRole)
-        publisher = item.data(7, Qt.UserRole)
-        composer = item.data(8, Qt.UserRole)
-        originalartist = item.data(9, Qt.UserRole)
-        lyrics = item.data(10, Qt.UserRole)
-        conductor = item.data(11, Qt.UserRole)
-        comments = item.data(12, Qt.UserRole)
 
-        self.ui.lineedit_title.setText(title)
-        self.ui.lineedit_artist.setText(artist)
-        self.ui.lineedit_album.setText(album)
-        self.ui.lineedit_album_artist.setText(albumartist)
-        self.ui.lineedit_year.setText(date)
-        self.ui.lineedit_genre.setText(genre)
-        self.ui.lineedit_track_number.setText(tracknumber)
-        self.ui.lineedit_publisher.setText(publisher)
-        self.ui.lineedit_composer.setText(composer)
-        self.ui.lineedit_original_artist.setText(originalartist)
-        self.ui.lineedit_conductor.setText(conductor)
-        self.ui.lineedit_comments.setText(comments)
+        # Collect tags from item data and store in the global dictionary
+        TagEditor.tags_to_be_written = {
+            "title": item.data(0, Qt.UserRole),
+            "artist": item.data(1, Qt.UserRole),
+            "album": item.data(2, Qt.UserRole),
+            "albumartist": item.data(3, Qt.UserRole),
+            "year": item.data(4, Qt.UserRole),
+            "genre": item.data(5, Qt.UserRole),
+            "tracknumber": item.data(6, Qt.UserRole),
+            "publisher": item.data(7, Qt.UserRole),
+            "composer": item.data(8, Qt.UserRole),
+            "originalartist": item.data(9, Qt.UserRole),
+            "conductor": item.data(11, Qt.UserRole),
+            "comments": item.data(12, Qt.UserRole)
+        }
+
+        # Set the line edits to the values from the global dictionary
+        for tag, line_edit in zip(TagEditor.tags_to_be_written.keys(),
+                                  [self.ui.lineedit_title, self.ui.lineedit_artist, self.ui.lineedit_album,
+                                   self.ui.lineedit_album_artist, self.ui.lineedit_year, self.ui.lineedit_genre,
+                                   self.ui.lineedit_track_number, self.ui.lineedit_publisher, self.ui.lineedit_composer,
+                                   self.ui.lineedit_original_artist, self.ui.lineedit_conductor,
+                                   self.ui.lineedit_comments]):
+            line_edit.setText(TagEditor.tags_to_be_written[tag])
 
     def edit_next(self):
         self.last_index += 1
@@ -353,6 +328,32 @@ class TagEditor(QWidget):
         audio["covr"] = [MP4Cover(cover_data, imageformat=MP4Cover.FORMAT_JPEG)]
         audio.save()
 
+    def apply_tags(self):
+        # Collect tags from UI inputs and store in the global dictionary
+        TagEditor.tags_to_be_written = {
+            "title": self.ui.lineedit_title.text(),
+            "artist": self.ui.lineedit_artist.text(),
+            "album": self.ui.lineedit_album.text(),
+            "albumartist": self.ui.lineedit_album_artist.text(),
+            "year": self.ui.lineedit_year.text(),
+            "genre": self.ui.lineedit_genre.text(),
+            "tracknumber": self.ui.lineedit_track_number.text(),
+            "comments": self.ui.lineedit_comments.text(),
+            "composer": self.ui.lineedit_composer.text(),
+            "originalartist": self.ui.lineedit_original_artist.text(),
+            "conductor": self.ui.lineedit_conductor.text(),
+            "publisher": self.ui.lineedit_publisher.text(),
+            "description": self.ui.lineedit_description.text(),
+        }
+
+        # Use the Mutagen library to write the tags
+        file = self.current_item.data[14]
+        audio = File(file, easy=True)
+        for tag, value in TagEditor.tags_to_be_written.items():
+            if value:  # Only update tags that have been provided
+                audio[tag] = value
+        audio.save()
+
     @classmethod
     def ui_popup(cls, text):
         message_box = QMessageBox()
@@ -362,10 +363,26 @@ class TagEditor(QWidget):
     def usage_guide(self):
         self.ui_popup(QCoreApplication.tr(
 """
+Click on 'Open File' to open a music file or 'Open Directory' to open a directory (and their subdirectories).
+All files found will be listed in the tree widget (the thing in the left).
+
+You can click on a song their and edit the metadata on the right. After you are done, click on 'Apply' to apply the tags.
+Note: The Lyrics and the Cover Art will be immeditately applied, when you select them.
+
+Tag Editor supports the following file formats:
+
+MP3,FLAC,M4A,OGG,WAV,WMA,AIFF,APE,MPC,TrueAudio (TTA), OptimFROG, Speex, ASF, WV, MP4, AAC
+
+(and even more...)
 
 
-
+If you experience any issues, please let me know :)
 """, None))
+
+    def add_lyrics(self):
+        input_dialog, ok = QInputDialog().getText(self, "Add Lyrics", "Add lyrics")
+        print(input_dialog)
+
 
 
 def main():
