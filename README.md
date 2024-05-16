@@ -49,7 +49,6 @@
 - Speex (.spx)
 - ASF - Advanced Systems Format (.asf)
 - WV (WavPack) (.wv)
-- MP4 - MPEG-4 Part 14 Multimedia-Container (.mp4)
 - AAC - Advanced Audio Coding (.aac)
 
 ## Supported Tags

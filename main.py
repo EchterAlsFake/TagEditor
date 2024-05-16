@@ -30,10 +30,11 @@ from PySide6.QtWidgets import (QApplication, QWidget, QMessageBox, QFileDialog, 
 from PySide6.QtGui import QTextCursor
 
 from mutagen import File
-from mutagen.id3 import ID3, APIC
+from mutagen.id3 import ID3, APIC, USLT, Encoding
 from mutagen.mp3 import MP3
 from mutagen.flac import FLAC, Picture, FLACNoHeaderError, error as flac_error
 from mutagen.mp4 import MP4, MP4Cover
+from mutagen.oggvorbis import OggVorbis
 
 __author__ = "Johannes Habel"
 __version__ = "1.0"
@@ -86,12 +87,16 @@ class LoadFiles(QRunnable):
 
     def run(self):
         files_ = []
+        invalid_extensions = [".jpg", ".jpeg", ".png", ".cue", ".mov", ".log", ".m3u", ".txt", ".mp4", ".JPG", ".mkv"
+                              ".nfo", ".CUE", ".LOG", ".M3U", ".gif", ".pdf", ".clpi", ".mpls", ".m2ts", ".bdmv", ".iso",
+                              ".xml", ".sqlite", "nfo", ".sfv"]
 
         self.signals.signal_start_undefined_range.emit()
         for root, dirs, files in os.walk(self.directory):
             for file in files:
-                full_path = os.path.join(root, file)
-                files_.append(full_path)
+                if not file.endswith(tuple(invalid_extensions)):
+                    full_path = os.path.join(root, file)
+                    files_.append(full_path)
 
         self.signals.signal_get_files.emit(files_)
         self.signals.signal_stop_undefined_range.emit()
@@ -123,8 +128,8 @@ class ReadTags(QRunnable):
                     self.signals.signal_read_tag.emit(tags)
 
                 else:
-                    self.signals.signal_error.emit(QCoreApplication.tr(f"Error: File ({file}) is "
-                                                                       f"unsupported or not found", None))
+                    print(f"The file: {file} couldn't be loaded, because it's not supported or contains invalid "
+                          f"headers.")
 
             except (FLACNoHeaderError, flac_error):
                 self.signals.signal_error.emit(QCoreApplication.tr(f"Error: File: {file} is broken!", None))
@@ -264,7 +269,7 @@ class TagEditor(QWidget):
 
     def load_tags_file(self):
         file, type = QFileDialog().getOpenFileName(None, QCoreApplication.tr("Select a music file", None),
-                                                   "", "Audio Files (*.mp3 *.flac *.m4a *.ogg *.mp4 *.oga *.wav"
+                                                   "", "Audio Files (*.mp3 *.flac *.m4a *.ogg *.oga *.wav"
                                                        " *.wma *.aiff *.aif *.ape *.mpc *.tta *.ofr *.ofs *.spx *.asf "
                                                        "*.wv *.aac)")
 
@@ -393,11 +398,11 @@ class TagEditor(QWidget):
             self.add_cover_art_mp3(file_path, art_path)
         elif ext == '.flac':
             self.add_cover_art_flac(file_path, art_path)
-        elif ext in ['.m4a', '.mp4']:
+        elif ext in ['.m4a']:
             self.add_cover_art_m4a(file_path, art_path)
         else:
-            self.ui_popup(QCoreApplication.tr("Unsupported file format!, only mp3, mp4, flac and m4a support"
-                                                "cover images!", None))
+            self.ui_popup(QCoreApplication().tr("""
+Unsupported file format!, only mp3, flac and m4a support" "cover images!""", None))
 
     @classmethod
     def add_cover_art_mp3(cls, file_path, art_path):
@@ -441,16 +446,35 @@ class TagEditor(QWidget):
     def add_lyrics(self):
         item = self.current_item
         path = item.data(13, Qt.UserRole)
-        file = File(path, easy=True)
+        file_extension = os.path.splitext(path)[1].lower()
 
         dialog = LyricsInputDialog()
         if dialog.exec() == QDialog.Accepted:
             lyrics = dialog.getText()
-            file.tags["lyrics"] = lyrics
 
-        file.save()
-        self.ui_popup(QCoreApplication.tr("Lyrics have been updated. Please note, that not all audio "
-                                                "codecs support embedded lyrics.", ""))
+            if file_extension == '.flac':
+                file = FLAC(path)
+                file["LYRICS"] = lyrics
+
+            elif file_extension == '.mp3':
+                file = ID3(path)
+                file.add(USLT(encoding=Encoding.UTF8, text=lyrics))
+
+            elif file_extension in ['.m4a', '.mp4', '.aac']:
+                file = MP4(path)
+                file["\xa9lyr"] = lyrics
+
+            elif file_extension == '.ogg':
+                file = OggVorbis(path)
+                file["LYRICS"] = lyrics
+
+            else:
+                self.ui_popup(QCoreApplication.tr("Unsupported file format.", ""))
+                return
+
+            file.save()
+            self.ui_popup(QCoreApplication.tr("Lyrics have been updated. Please note, that not all audio "
+                                              "codecs support embedded lyrics.", ""))
 
     @classmethod
     def ui_popup(cls, text):
@@ -460,7 +484,7 @@ class TagEditor(QWidget):
 
     def usage_guide(self):
         self.ui_popup(QCoreApplication.tr(self,
-            """
+"""
 Click on 'Open File' to open a music file or 'Open Directory' to open a directory (and their subdirectories).
 All files found will be listed in the tree widget (the thing in the left).
 
@@ -469,12 +493,25 @@ Note: The Lyrics and the Cover Art will be immediately applied, when you select 
 
 Tag Editor supports the following file formats:
 
-MP3,FLAC,M4A,OGG,WAV,WMA,AIFF,APE,MPC,TrueAudio (TTA), OptimFROG, Speex, ASF, WV, MP4, AAC
+MP3,FLAC,M4A,OGG,WAV,WMA,AIFF,APE,MPC,TrueAudio (TTA), OptimFROG, Speex, ASF, WV, AAC
 
 (and even more...)
 
 
 If you experience any issues, please let me know :)
+
+! Note:
+
+Some files may be corrupted in their headers. For example some of my own .flac files won't work with this tool, because
+they've been poorly ripped or people manually changed them.
+
+If this occurs, I recommend you to use a tool called ffmpeg, to re-encode the file. This gives you the same quality, but
+ensures that the file headers are correct.
+
+
+e.g,  ffmpeg -i your_file.flac -o fixed_file.flac
+
+(Pretty simple)
 """, None))
 
 
