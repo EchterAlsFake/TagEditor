@@ -22,6 +22,8 @@ import argparse
 
 from sys import argv
 from src.frontend.ui_form import Ui_Form
+from src.backend.consts import *
+from src.backend.shared_functions import *
 
 from PySide6.QtCore import (QCoreApplication, QTranslator, QRunnable, QThreadPool, QFile, QTextStream,QObject, Signal,
                             Qt, QLocale)
@@ -32,9 +34,11 @@ from PySide6.QtGui import QTextCursor
 from mutagen import File
 from mutagen.id3 import ID3, APIC, USLT, Encoding
 from mutagen.mp3 import MP3
+from mutagen.id3 import ID3, TIT2, TPE1, TALB, TPE2, TYER, TCON, TRCK, TPUB, TCOM, TOPE, USLT, TPE3, COMM, TDRC, ID3NoHeaderError
 from mutagen.flac import FLAC, Picture, FLACNoHeaderError, error as flac_error
 from mutagen.mp4 import MP4, MP4Cover
 from mutagen.oggvorbis import OggVorbis
+from mutagen.asf import ASF
 
 __author__ = "Johannes Habel"
 __version__ = "1.0"
@@ -66,17 +70,6 @@ class Setup(QRunnable):
 
         except Exception as e:
             print(f"Error checking for an update... {e}")
-
-
-class Signals(QObject):
-    signal_read_tag = Signal(dict)
-    signal_progress = Signal(int, int)
-    signal_get_files = Signal(list)
-    signal_error = Signal(str)
-    signal_start_undefined_range = Signal()
-    signal_stop_undefined_range = Signal()
-    signal_finished = Signal()
-    signal_update_result = Signal(bool)
 
 
 class LoadFiles(QRunnable):
@@ -119,51 +112,34 @@ class ReadTags(QRunnable):
 
         for idx, file in enumerate(files):
             try:
-                audio = File(file, easy=True)
+                file_extension = os.path.splitext(file)[1].lower()
+                tag_mapping = get_tag_mapping(file_extension)
+                if not tag_mapping:
+                    print(f"Unsupported file format: {file}")
+                    continue
+
+                audio = get_audio_file(file, file_extension)
                 if audio:
-                    tags = {tag: audio.get(tag, [''])[0] for tag in self.tags_to_extract}
+                    tags = {}
+                    for tag in self.tags_to_extract:
+                        tag_name = tag_mapping.get(tag)
+                        if tag_name:
+                            tags[tag] = audio.get(tag_name, [''])[0]
+
                     title = tags['title'] if tags['title'] else os.path.splitext(os.path.basename(file))[0]
                     tags.update({'title': title, 'idx': idx, "file_path": file})
                     self.signals.signal_progress.emit(idx, total_length)
                     self.signals.signal_read_tag.emit(tags)
 
                 else:
-                    print(f"The file: {file} couldn't be loaded, because it's not supported or contains invalid "
-                          f"headers.")
+                    print(
+                        f"The file: {file} couldn't be loaded, because it's not supported or contains invalid headers.")
 
-            except (FLACNoHeaderError, flac_error):
+            except Exception as e:
+                print(f"Error reading {file}: {str(e)}")
                 self.signals.signal_error.emit(QCoreApplication.tr(f"Error: File: {file} is broken!", None))
 
         self.signals.signal_finished.emit()
-
-
-class LyricsInputDialog(QDialog):
-    def __init__(self, parent=None):
-        super(LyricsInputDialog, self).__init__(parent)
-        self.initUI()
-
-    def initUI(self):
-        self.setWindowTitle("Input Lyrics")
-        self.setGeometry(100, 100, 400, 300)
-        layout = QVBoxLayout()
-        self.textEdit = QTextEdit()
-        self.textEdit.setPlaceholderText("Enter lyrics here...")
-        layout.addWidget(self.textEdit)
-
-        self.buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
-        self.buttonBox.accepted.connect(self.accept)
-        self.buttonBox.rejected.connect(self.reject)
-        layout.addWidget(self.buttonBox)
-
-        self.setLayout(layout)
-
-    def getText(self):
-        return self.textEdit.toPlainText()
-
-    def showEvent(self, event):
-        super(LyricsInputDialog, self).showEvent(event)
-        self.textEdit.setFocus()
-        self.textEdit.moveCursor(QTextCursor.Start)
 
 
 class TagEditor(QWidget):
@@ -354,13 +330,12 @@ class TagEditor(QWidget):
         self.ui.lineedit_comments.setText(item.data(12, Qt.UserRole))
 
     def apply_tags(self):
-        # Collect tags from UI inputs and store in the global dictionary
         TagEditor.tags_to_be_written = {
             "title": self.ui.lineedit_title.text(),
             "artist": self.ui.lineedit_artist.text(),
             "album": self.ui.lineedit_album.text(),
             "albumartist": self.ui.lineedit_album_artist.text(),
-            "year": self.ui.lineedit_year.text(),
+            "date": self.ui.lineedit_year.text(),
             "genre": self.ui.lineedit_genre.text(),
             "tracknumber": self.ui.lineedit_track_number.text(),
             "comments": self.ui.lineedit_comments.text(),
@@ -368,16 +343,34 @@ class TagEditor(QWidget):
             "originalartist": self.ui.lineedit_original_artist.text(),
             "conductor": self.ui.lineedit_conductor.text(),
             "publisher": self.ui.lineedit_publisher.text(),
-            "description": self.ui.lineedit_description.text(),
         }
 
-        # Use the Mutagen library to write the tags
-        file = self.current_item.data(13, Qt.UserRole)
-        audio = File(file, easy=True)
-        for tag, value in TagEditor.tags_to_be_written.items():
-            if value:  # Only update tags that have been provided
-                audio[tag] = value
-        audio.save()
+        file_path = self.current_item.data(13, Qt.UserRole)
+        file_extension = os.path.splitext(file_path)[1].lower()
+
+        tag_mapping = get_tag_mapping(file_extension)
+        if not tag_mapping:
+            self.ui.lineedit_status.setText(QCoreApplication.tr("Unsupported file format.", ""))
+            return
+
+        audio = get_audio_file(file_path, file_extension)
+        if not audio:
+            self.ui.lineedit_status.setText(QCoreApplication.tr("Error loading file.", ""))
+            return
+
+        # Apply tags
+        for tag, frame in tag_mapping.items():
+            value = TagEditor.tags_to_be_written.get(tag)
+            if value:
+                if file_extension == '.mp3':
+                    audio.add(frame(encoding=Encoding.UTF8, text=value))
+                else:
+                    audio[frame] = value
+
+        if file_extension == '.mp3':
+            audio.save(v2_version=3)  # Save as ID3v2.3
+        else:
+            audio.save()
         self.ui.lineedit_status.setText(QCoreApplication.tr("Tags have been written: ✔", ""))
 
     def select_cover_art(self):
