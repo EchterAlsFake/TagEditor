@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1708</width>
-    <height>495</height>
+    <width>1760</width>
+    <height>513</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1688</width>
-        <height>475</height>
+        <width>1740</width>
+        <height>493</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
@@ -34,53 +34,10 @@
          <item row="0" column="0">
           <widget class="QWidget" name="widget" native="true">
            <layout class="QGridLayout" name="gridLayout_4">
-            <item row="0" column="1">
-             <layout class="QVBoxLayout" name="verticalLayout">
-              <item>
-               <widget class="QProgressBar" name="progressbar">
-                <property name="value">
-                 <number>0</number>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QPushButton" name="button_open_file">
-                <property name="text">
-                 <string>Open a file</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="button_open_directory">
-                <property name="text">
-                 <string>Open a directory</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="button_usage_guide">
-                <property name="text">
-                 <string>Usage Guide</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="button_error_log">
-                <property name="text">
-                 <string>Error Log</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
             <item row="1" column="1">
              <widget class="QGroupBox" name="groupBox">
               <property name="title">
-               <string>Editing...</string>
+               <string>Press: SHIFT + F to switch into the advanced mode.</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_2">
                <item row="1" column="0">
@@ -269,6 +226,17 @@
               </layout>
              </widget>
             </item>
+            <item row="0" column="1">
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <widget class="QProgressBar" name="progressbar">
+                <property name="value">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
             <item row="1" column="0">
              <layout class="QVBoxLayout" name="verticalLayout_2">
               <item>
@@ -317,6 +285,38 @@
                   </item>
                  </layout>
                 </widget>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QPushButton" name="button_open_file">
+                <property name="text">
+                 <string>Open a file</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="button_open_directory">
+                <property name="text">
+                 <string>Open a directory</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="button_usage_guide">
+                <property name="text">
+                 <string>Usage Guide</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="button_error_log">
+                <property name="text">
+                 <string>Error Log</string>
+                </property>
                </widget>
               </item>
              </layout>
