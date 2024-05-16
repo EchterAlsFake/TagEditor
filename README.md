@@ -38,13 +38,13 @@
 - MP3 - MPEG-1 Audio Layer III or MPEG-2 Audio Layer III (.mp3)
 - FLAC - Free Lossless Audio Codec (.flac)
 - M4A - MPEG-4 Audio-Files, .m4a
-- OGG - (.ogg, .oga)
+- OGG - .ogg
 - WMA - Windows Media Audio files (.wma)
 - AIFF - Audio Interchange File Format, (.aiff, .aif)
 - APE - Monkey’s Audio, (.ape)
 - MPC - Musepack (.mpc)
 - TrueAudio (TTA) (.tta)
-- OptimFROG (.ofr, .ofs)
+- OptimFROG, .ofr
 - Speex (.spx)
 - ASF - Advanced Systems Format (.asf)
 - WV (WavPack) (.wv)
