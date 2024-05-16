@@ -157,52 +157,87 @@
 <context>
     <name>QCoreApplication</name>
     <message>
-        <location filename="../../../main.py" line="126"/>
-        <source>Error: File ({file}) is unsupported or not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../main.py" line="129"/>
+        <location filename="../../../main.py" line="135"/>
         <source>Error: File: {file} is broken!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="233"/>
+        <location filename="../../../main.py" line="239"/>
         <source>Version: {__next_release__} is out!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="235"/>
+        <location filename="../../../main.py" line="241"/>
         <source>No update was found...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="265"/>
+        <location filename="../../../main.py" line="271"/>
         <source>Select a music file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="375"/>
+        <location filename="../../../main.py" line="381"/>
         <source>Tags have been written: ✔</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="379"/>
+        <location filename="../../../main.py" line="385"/>
         <source>Select Cover Art</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="385"/>
+        <location filename="../../../main.py" line="515"/>
+        <source>
+Click on &apos;Open File&apos; to open a music file or &apos;Open Directory&apos; to open a directory (and their subdirectories).
+All files found will be listed in the tree widget (the thing in the left).
+
+You can click on a song their and edit the metadata on the right. After you are done, click on &apos;Apply&apos; to apply the tags.
+Note: The Lyrics and the Cover Art will be immediately applied, when you select them.
+
+Tag Editor supports the following file formats:
+
+MP3,FLAC,M4A,OGG,WAV,WMA,AIFF,APE,MPC,TrueAudio (TTA), OptimFROG, Speex, ASF, WV, AAC
+
+(and even more...)
+
+
+If you experience any issues, please let me know :)
+
+! Note:
+
+Some files may be corrupted in their headers. For example some of my own .flac files won&apos;t work with this tool, because
+they&apos;ve been poorly ripped or people manually changed them.
+
+If this occurs, I recommend you to use a tool called ffmpeg, to re-encode the file. This gives you the same quality, but
+ensures that the file headers are correct.
+
+
+e.g,  ffmpeg -i your_file.flac -o fixed_file.flac
+
+(Pretty simple)
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../main.py" line="277"/>
+        <location filename="../../../main.py" line="391"/>
         <source>No file was selected...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="399"/>
-        <source>Unsupported file format!, only mp3, mp4, flac and m4a supportcover images!</source>
+        <location filename="../../../main.py" line="405"/>
+        <source>
+Unsupported file format!, only mp3, flac and m4a support&quot; &quot;cover images!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="452"/>
+        <location filename="../../../main.py" line="472"/>
+        <source>Unsupported file format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../main.py" line="477"/>
         <source>Lyrics have been updated. Please note, that not all audio codecs support embedded lyrics.</source>
         <translation type="unfinished"></translation>
     </message>

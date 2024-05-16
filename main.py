@@ -274,7 +274,7 @@ class TagEditor(QWidget):
                                                        "*.wv *.aac)")
 
         if file is None or file == "":
-            self.ui_popup(QCoreApplication.tr(self,"No file was selected...", None))
+            self.ui_popup(QCoreApplication.tr("No file was selected...", None))
             return
 
         self.load_tags(path=file, is_directory=False)
@@ -401,7 +401,7 @@ class TagEditor(QWidget):
         elif ext in ['.m4a']:
             self.add_cover_art_m4a(file_path, art_path)
         else:
-            self.ui_popup(QCoreApplication().tr("""
+            self.ui_popup(QCoreApplication.tr("""
 Unsupported file format!, only mp3, flac and m4a support" "cover images!""", None))
 
     @classmethod
@@ -483,7 +483,7 @@ Unsupported file format!, only mp3, flac and m4a support" "cover images!""", Non
         message_box.exec()
 
     def usage_guide(self):
-        self.ui_popup(QCoreApplication.tr(self,
+        self.ui_popup(QCoreApplication.tr(
 """
 Click on 'Open File' to open a music file or 'Open Directory' to open a directory (and their subdirectories).
 All files found will be listed in the tree widget (the thing in the left).

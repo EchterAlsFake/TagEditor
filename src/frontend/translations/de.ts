@@ -158,52 +158,113 @@ wenn sie nach dem beearbeiten nicht angezeigt werden, dann werden sie nicht unte
 <context>
     <name>QCoreApplication</name>
     <message>
-        <location filename="../../../main.py" line="126"/>
-        <source>Error: File ({file}) is unsupported or not found</source>
-        <translation>Fehler: Datei {file} wird nicht unterstützt oder wurde nicht gefunden</translation>
-    </message>
-    <message>
-        <location filename="../../../main.py" line="129"/>
+        <location filename="../../../main.py" line="135"/>
         <source>Error: File: {file} is broken!</source>
         <translation>Fehler: Datei {file} ist fehlerhaft!</translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="233"/>
+        <location filename="../../../main.py" line="239"/>
         <source>Version: {__next_release__} is out!</source>
         <translation>Version: {__next_release__} ist veröffentlicht!</translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="235"/>
+        <location filename="../../../main.py" line="241"/>
         <source>No update was found...</source>
         <translation>Es wurde keine Aktualisierung gefunden...</translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="265"/>
+        <location filename="../../../main.py" line="271"/>
         <source>Select a music file</source>
         <translation>Wähle eine Musikdatei aus</translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="375"/>
+        <location filename="../../../main.py" line="381"/>
         <source>Tags have been written: ✔</source>
         <translation>Tags wurden geschrieben: ✔</translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="379"/>
+        <location filename="../../../main.py" line="385"/>
         <source>Select Cover Art</source>
         <translation>Wähle ein Vorschaubild aus</translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="385"/>
+        <location filename="../../../main.py" line="515"/>
+        <source>
+Click on &apos;Open File&apos; to open a music file or &apos;Open Directory&apos; to open a directory (and their subdirectories).
+All files found will be listed in the tree widget (the thing in the left).
+
+You can click on a song their and edit the metadata on the right. After you are done, click on &apos;Apply&apos; to apply the tags.
+Note: The Lyrics and the Cover Art will be immediately applied, when you select them.
+
+Tag Editor supports the following file formats:
+
+MP3,FLAC,M4A,OGG,WAV,WMA,AIFF,APE,MPC,TrueAudio (TTA), OptimFROG, Speex, ASF, WV, AAC
+
+(and even more...)
+
+
+If you experience any issues, please let me know :)
+
+! Note:
+
+Some files may be corrupted in their headers. For example some of my own .flac files won&apos;t work with this tool, because
+they&apos;ve been poorly ripped or people manually changed them.
+
+If this occurs, I recommend you to use a tool called ffmpeg, to re-encode the file. This gives you the same quality, but
+ensures that the file headers are correct.
+
+
+e.g,  ffmpeg -i your_file.flac -o fixed_file.flac
+
+(Pretty simple)
+</source>
+        <translation>
+Klicken Sie auf &apos;Datei öffnen&apos;, um eine Musikdatei zu öffnen, oder auf &apos;Verzeichnis öffnen&apos;, um ein Verzeichnis (und deren Unterverzeichnisse) zu öffnen.
+Alle gefundenen Dateien werden im Baum-Widget (das Ding links) aufgelistet.
+
+Sie können auf ein Lied klicken und die Metadaten rechts bearbeiten. Nachdem Sie fertig sind, klicken Sie auf &apos;Übernehmen&apos;, um die Tags anzuwenden.
+Hinweis: Die Texte und das Coverbild werden sofort angewendet, wenn Sie sie auswählen.
+
+Der Tag Editor unterstützt die folgenden Dateiformate:
+
+MP3, FLAC, M4A, OGG, WAV, WMA, AIFF, APE, MPC, TrueAudio (TTA), OptimFROG, Speex, ASF, WV, AAC
+
+(und noch mehr...)
+
+Wenn Sie Probleme haben, lassen Sie es mich bitte wissen :)
+
+! Hinweis:
+
+Einige Dateien können in ihren Headern beschädigt sein. Zum Beispiel funktionieren einige meiner eigenen .flac-Dateien nicht mit diesem Tool, weil sie schlecht gerippt wurden oder weil Menschen sie manuell verändert haben.
+
+Falls dies passiert, empfehle ich Ihnen, ein Tool namens ffmpeg zu verwenden, um die Datei neu zu codieren. Dies bietet Ihnen die gleiche Qualität, stellt aber sicher, dass die Dateiköpfe korrekt sind.
+
+
+z.B. ffmpeg -i Ihre_Datei.flac -o gefixte_Datei.flac
+
+(Ziemlich einfach)
+</translation>
+    </message>
+    <message>
+        <location filename="../../../main.py" line="277"/>
+        <location filename="../../../main.py" line="391"/>
         <source>No file was selected...</source>
         <translation>Es wurde keine Datei ausgewählt...</translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="399"/>
-        <source>Unsupported file format!, only mp3, mp4, flac and m4a supportcover images!</source>
-        <translation>Nicht unterstütztes Dateiformat, nur mp3, mp4,flac und m4a unterstützten Vorschaubilder!</translation>
+        <location filename="../../../main.py" line="405"/>
+        <source>
+Unsupported file format!, only mp3, flac and m4a support&quot; &quot;cover images!</source>
+        <translation>
+Nicht unterstütztes Dateiformat. Nur mp3, flac und m4a unterstützen Vorschaubilder!</translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="452"/>
+        <location filename="../../../main.py" line="472"/>
+        <source>Unsupported file format.</source>
+        <translation>Dieses Dateiformat wird nicht unterstützt.</translation>
+    </message>
+    <message>
+        <location filename="../../../main.py" line="477"/>
         <source>Lyrics have been updated. Please note, that not all audio codecs support embedded lyrics.</source>
         <translation>Lyrics wurden aktualisiert. Achtung, nicht alle Audio Codecs unterstützten eingebettete Lyrics.</translation>
     </message>
