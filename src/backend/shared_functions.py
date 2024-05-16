@@ -15,16 +15,18 @@ def get_tag_mapping(file_extension):
         '.mp3': TAGS_MP3,
         '.flac': TAGS_FLAC,
         '.m4a': TAGS_MP4,
-        '.mp4': TAGS_MP4,
         '.aac': TAGS_AAC,
         '.ogg': TAGS_OGG,
+        '.oga': TAGS_OGG,
         '.wma': TAGS_WMA,
         '.aiff': TAGS_AIFF,
+        '.aif': TAGS_AIFF,
         '.ape': TAGS_APE,
         '.mpc': TAGS_MPC,
         '.tta': TAGS_TTA,
         '.wv': TAGS_WV,
-        '.spx': TAGS_SPEEX
+        '.spx': TAGS_SPEEX,
+        '.asf': TAGS_WMA
     }
     return tag_mappings.get(file_extension)
 
@@ -40,13 +42,14 @@ def get_audio_file(file_path, file_extension):
         '.oga': OggVorbis,
         '.wma': ASF,
         '.asf': ASF,
-        '.aiff': File,  # Mutagen unterstützt AIFF im Easy-Modus
+        '.ofr': TAGS_OPTIMFROG,
+        '.aiff': File,
         '.aif': File,
-        '.ape': File,  # Mutagen unterstützt APE im Easy-Modus
-        '.mpc': File,  # Mutagen unterstützt MPC im Easy-Modus
-        '.tta': File,  # Mutagen unterstützt TTA im Easy-Modus
-        '.wv': File,  # Mutagen unterstützt WV im Easy-Modus
-        '.spx': File  # Mutagen unterstützt Speex im Easy-Modus
+        '.ape': File,
+        '.mpc': File,
+        '.tta': File,
+        '.wv': File,
+        '.spx': File
     }
     audio_class = audio_classes.get(file_extension)
     if not audio_class:

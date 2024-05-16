@@ -217,3 +217,19 @@ TAGS_AAC = {
     "comments": "\xa9cmt"
 }
 
+
+TAGS_OPTIMFROG = {
+    "title": "TITLE",
+    "artist": "ARTIST",
+    "album": "ALBUM",
+    "albumartist": "ALBUMARTIST",
+    "date": "DATE",
+    "genre": "GENRE",
+    "tracknumber": "TRACKNUMBER",
+    "publisher": "PUBLISHER",
+    "composer": "COMPOSER",
+    "originalartist": "ORIGINALARTIST",
+    "lyrics": "LYRICS",
+    "conductor": "CONDUCTOR",
+    "comments": "COMMENT"
+}

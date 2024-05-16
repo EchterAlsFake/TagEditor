@@ -131,7 +131,8 @@ class ReadTags(QRunnable):
                     self.signals.signal_read_tag.emit(tags)
 
                 else:
-                    print(f"The file: {file} couldn't be loaded, because it's not supported or contains invalid headers.")
+                    print(
+                        f"The file: {file} couldn't be loaded, because it's not supported or contains invalid headers.")
 
             except FLACNoHeaderError:
                 _ = {"path": file, "error": "FLAC Header is invalid!"}
