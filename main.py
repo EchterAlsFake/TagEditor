@@ -188,6 +188,7 @@ class TagEditor(QWidget):
         self.ui.button_change_lyrics.setStyleSheet(stylesheets["button_blue"])
         self.ui.button_change_coverart.setStyleSheet(stylesheets["button_blue"])
         self.ui.button_open_directory.setStyleSheet(stylesheets["button_purple"])
+        self.ui.button_error_log.setStyleSheet(stylesheets["button_orange"])
         self.ui.progressbar.setStyleSheet(stylesheets["progressbar"])
         self.ui.stackedWidget.setCurrentIndex(0)
 
@@ -536,13 +537,20 @@ e.g,  ffmpeg -i your_file.flac -o fixed_file.flac
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-fe", "--force_english", action="store_true", help="Forces the application to load in english language")
+    parser.add_argument("-fe", "--force_english", action="store_true",
+                        help="Forces the application to load in english language")
+
+    parser.add_argument("-fg", "--force_german", action="store_true",
+                        help="Forces the application to load in german language")
     app = QApplication(argv)
     app.setStyle("Fusion")
     args = parser.parse_args()
 
     if args.force_english:
         language_code = "en"
+
+    elif args.force_german:
+        language_code = "de_DE"
 
     else:
         locale = QLocale.system()

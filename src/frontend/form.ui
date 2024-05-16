@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1760</width>
-    <height>513</height>
+    <width>1305</width>
+    <height>542</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1740</width>
-        <height>493</height>
+        <width>1285</width>
+        <height>522</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
@@ -37,7 +37,7 @@
             <item row="1" column="1">
              <widget class="QGroupBox" name="groupBox">
               <property name="title">
-               <string>Press: SHIFT + F to switch into the advanced mode.</string>
+               <string/>
               </property>
               <layout class="QGridLayout" name="gridLayout_2">
                <item row="1" column="0">
@@ -155,6 +155,9 @@
                  </item>
                  <item row="6" column="3">
                   <widget class="QPushButton" name="button_change_coverart">
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="text">
                     <string>Select</string>
                    </property>
@@ -179,6 +182,9 @@
                  </item>
                  <item row="9" column="0" colspan="2">
                   <widget class="QPushButton" name="button_apply">
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="text">
                     <string>Apply</string>
                    </property>
@@ -186,6 +192,9 @@
                  </item>
                  <item row="9" column="2" colspan="2">
                   <widget class="QPushButton" name="button_edit_next">
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="text">
                     <string>Edit next file</string>
                    </property>
@@ -202,6 +211,9 @@
                  </item>
                  <item row="3" column="3">
                   <widget class="QPushButton" name="button_change_lyrics">
+                   <property name="cursor">
+                    <cursorShape>PointingHandCursor</cursorShape>
+                   </property>
                    <property name="text">
                     <string>Change</string>
                    </property>
@@ -211,13 +223,6 @@
                   <widget class="QLabel" name="label_album_artist">
                    <property name="text">
                     <string>Album Artist:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0" colspan="4">
-                  <widget class="QLabel" name="label">
-                   <property name="text">
-                    <string>Important: Not all file types support every attribute. You'll be able to write them, but if they don't show up after you edited them, it means it's not supported!</string>
                    </property>
                   </widget>
                  </item>
@@ -242,7 +247,7 @@
               <item>
                <widget class="QStackedWidget" name="stackedWidget">
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="page">
                  <layout class="QGridLayout" name="gridLayout_6">
@@ -293,6 +298,9 @@
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
                <widget class="QPushButton" name="button_open_file">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Open a file</string>
                 </property>
@@ -300,6 +308,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="button_open_directory">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Open a directory</string>
                 </property>
@@ -307,6 +318,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="button_usage_guide">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Usage Guide</string>
                 </property>
@@ -314,6 +328,9 @@
               </item>
               <item>
                <widget class="QPushButton" name="button_error_log">
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Error Log</string>
                 </property>
@@ -332,6 +349,9 @@
               </item>
               <item>
                <widget class="QLineEdit" name="lineedit_status">
+                <property name="cursor">
+                 <cursorShape>ArrowCursor</cursorShape>
+                </property>
                 <property name="readOnly">
                  <bool>true</bool>
                 </property>
@@ -346,6 +366,9 @@
               </item>
               <item>
                <widget class="QLineEdit" name="lineedit_update">
+                <property name="cursor">
+                 <cursorShape>ArrowCursor</cursorShape>
+                </property>
                 <property name="readOnly">
                  <bool>true</bool>
                 </property>
@@ -369,6 +392,8 @@
   <tabstop>button_open_file</tabstop>
   <tabstop>button_open_directory</tabstop>
   <tabstop>button_usage_guide</tabstop>
+  <tabstop>button_error_log</tabstop>
+  <tabstop>treeWidget_2</tabstop>
   <tabstop>lineedit_title</tabstop>
   <tabstop>lineedit_composer</tabstop>
   <tabstop>lineedit_artist</tabstop>
@@ -388,6 +413,7 @@
   <tabstop>button_edit_next</tabstop>
   <tabstop>lineedit_status</tabstop>
   <tabstop>lineedit_update</tabstop>
+  <tabstop>treeWidget</tabstop>
  </tabstops>
  <resources/>
  <connections/>

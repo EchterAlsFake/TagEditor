@@ -20,12 +20,11 @@ from PySide6.QtWidgets import (QApplication, QGridLayout, QGroupBox, QHBoxLayout
     QPushButton, QScrollArea, QSizePolicy, QStackedWidget,
     QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 
-
 class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(1708, 495)
+        Form.resize(1305, 542)
         self.gridLayout_7 = QGridLayout(Form)
         self.gridLayout_7.setObjectName(u"gridLayout_7")
         self.scrollArea = QScrollArea(Form)
@@ -33,7 +32,7 @@ class Ui_Form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1688, 475))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1285, 522))
         self.gridLayout_5 = QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.gridLayout_3 = QGridLayout()
@@ -42,42 +41,6 @@ class Ui_Form(object):
         self.widget.setObjectName(u"widget")
         self.gridLayout_4 = QGridLayout(self.widget)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.progressbar = QProgressBar(self.widget)
-        self.progressbar.setObjectName(u"progressbar")
-        self.progressbar.setValue(0)
-
-        self.verticalLayout.addWidget(self.progressbar)
-
-
-        self.gridLayout_4.addLayout(self.verticalLayout, 0, 1, 1, 1)
-
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.button_open_file = QPushButton(self.widget)
-        self.button_open_file.setObjectName(u"button_open_file")
-
-        self.horizontalLayout.addWidget(self.button_open_file)
-
-        self.button_open_directory = QPushButton(self.widget)
-        self.button_open_directory.setObjectName(u"button_open_directory")
-
-        self.horizontalLayout.addWidget(self.button_open_directory)
-
-        self.button_usage_guide = QPushButton(self.widget)
-        self.button_usage_guide.setObjectName(u"button_usage_guide")
-
-        self.horizontalLayout.addWidget(self.button_usage_guide)
-
-        self.button_error_log = QPushButton(self.widget)
-        self.button_error_log.setObjectName(u"button_error_log")
-
-        self.horizontalLayout.addWidget(self.button_error_log)
-
-
-        self.gridLayout_4.addLayout(self.horizontalLayout, 0, 0, 1, 1)
-
         self.groupBox = QGroupBox(self.widget)
         self.groupBox.setObjectName(u"groupBox")
         self.gridLayout_2 = QGridLayout(self.groupBox)
@@ -191,6 +154,7 @@ class Ui_Form(object):
 
         self.button_change_coverart = QPushButton(self.groupBox)
         self.button_change_coverart.setObjectName(u"button_change_coverart")
+        self.button_change_coverart.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.gridLayout.addWidget(self.button_change_coverart, 6, 3, 1, 1)
 
@@ -211,11 +175,13 @@ class Ui_Form(object):
 
         self.button_apply = QPushButton(self.groupBox)
         self.button_apply.setObjectName(u"button_apply")
+        self.button_apply.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.gridLayout.addWidget(self.button_apply, 9, 0, 1, 2)
 
         self.button_edit_next = QPushButton(self.groupBox)
         self.button_edit_next.setObjectName(u"button_edit_next")
+        self.button_edit_next.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.gridLayout.addWidget(self.button_edit_next, 9, 2, 1, 2)
 
@@ -236,6 +202,7 @@ class Ui_Form(object):
 
         self.button_change_lyrics = QPushButton(self.groupBox)
         self.button_change_lyrics.setObjectName(u"button_change_lyrics")
+        self.button_change_lyrics.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.gridLayout.addWidget(self.button_change_lyrics, 3, 3, 1, 1)
 
@@ -244,16 +211,22 @@ class Ui_Form(object):
 
         self.gridLayout.addWidget(self.label_album_artist, 4, 0, 1, 1)
 
-        self.label = QLabel(self.groupBox)
-        self.label.setObjectName(u"label")
-
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 4)
-
 
         self.gridLayout_2.addLayout(self.gridLayout, 1, 0, 1, 1)
 
 
         self.gridLayout_4.addWidget(self.groupBox, 1, 1, 1, 1)
+
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.progressbar = QProgressBar(self.widget)
+        self.progressbar.setObjectName(u"progressbar")
+        self.progressbar.setValue(0)
+
+        self.verticalLayout.addWidget(self.progressbar)
+
+
+        self.gridLayout_4.addLayout(self.verticalLayout, 0, 1, 1, 1)
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -285,6 +258,35 @@ class Ui_Form(object):
 
         self.gridLayout_4.addLayout(self.verticalLayout_2, 1, 0, 1, 1)
 
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.button_open_file = QPushButton(self.widget)
+        self.button_open_file.setObjectName(u"button_open_file")
+        self.button_open_file.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.horizontalLayout.addWidget(self.button_open_file)
+
+        self.button_open_directory = QPushButton(self.widget)
+        self.button_open_directory.setObjectName(u"button_open_directory")
+        self.button_open_directory.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.horizontalLayout.addWidget(self.button_open_directory)
+
+        self.button_usage_guide = QPushButton(self.widget)
+        self.button_usage_guide.setObjectName(u"button_usage_guide")
+        self.button_usage_guide.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.horizontalLayout.addWidget(self.button_usage_guide)
+
+        self.button_error_log = QPushButton(self.widget)
+        self.button_error_log.setObjectName(u"button_error_log")
+        self.button_error_log.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.horizontalLayout.addWidget(self.button_error_log)
+
+
+        self.gridLayout_4.addLayout(self.horizontalLayout, 0, 0, 1, 1)
+
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.label_ststus = QLabel(self.widget)
@@ -294,6 +296,7 @@ class Ui_Form(object):
 
         self.lineedit_status = QLineEdit(self.widget)
         self.lineedit_status.setObjectName(u"lineedit_status")
+        self.lineedit_status.setCursor(QCursor(Qt.ArrowCursor))
         self.lineedit_status.setReadOnly(True)
 
         self.horizontalLayout_3.addWidget(self.lineedit_status)
@@ -305,6 +308,7 @@ class Ui_Form(object):
 
         self.lineedit_update = QLineEdit(self.widget)
         self.lineedit_update.setObjectName(u"lineedit_update")
+        self.lineedit_update.setCursor(QCursor(Qt.ArrowCursor))
         self.lineedit_update.setReadOnly(True)
 
         self.horizontalLayout_3.addWidget(self.lineedit_update)
@@ -325,7 +329,9 @@ class Ui_Form(object):
         QWidget.setTabOrder(self.scrollArea, self.button_open_file)
         QWidget.setTabOrder(self.button_open_file, self.button_open_directory)
         QWidget.setTabOrder(self.button_open_directory, self.button_usage_guide)
-        QWidget.setTabOrder(self.button_usage_guide, self.lineedit_title)
+        QWidget.setTabOrder(self.button_usage_guide, self.button_error_log)
+        QWidget.setTabOrder(self.button_error_log, self.treeWidget_2)
+        QWidget.setTabOrder(self.treeWidget_2, self.lineedit_title)
         QWidget.setTabOrder(self.lineedit_title, self.lineedit_composer)
         QWidget.setTabOrder(self.lineedit_composer, self.lineedit_artist)
         QWidget.setTabOrder(self.lineedit_artist, self.lineedit_original_artist)
@@ -344,10 +350,11 @@ class Ui_Form(object):
         QWidget.setTabOrder(self.button_apply, self.button_edit_next)
         QWidget.setTabOrder(self.button_edit_next, self.lineedit_status)
         QWidget.setTabOrder(self.lineedit_status, self.lineedit_update)
+        QWidget.setTabOrder(self.lineedit_update, self.treeWidget)
 
         self.retranslateUi(Form)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(Form)
@@ -355,11 +362,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Tag Editor (C) Johannes Habel GPLv3 v1.0 -- Source Code: https://github.com/EchterAlsFake/TagEditor", None))
-        self.button_open_file.setText(QCoreApplication.translate("Form", u"Open a file", None))
-        self.button_open_directory.setText(QCoreApplication.translate("Form", u"Open a directory", None))
-        self.button_usage_guide.setText(QCoreApplication.translate("Form", u"Usage Guide", None))
-        self.button_error_log.setText(QCoreApplication.translate("Form", u"Error Log", None))
-        self.groupBox.setTitle(QCoreApplication.translate("Form", u"Editing...", None))
+        self.groupBox.setTitle("")
         self.label_publisher.setText(QCoreApplication.translate("Form", u"Publisher:", None))
         self.label_composer.setText(QCoreApplication.translate("Form", u"Composer:", None))
         self.label_description.setText(QCoreApplication.translate("Form", u"Description:", None))
@@ -379,7 +382,6 @@ class Ui_Form(object):
         self.button_edit_next.setText(QCoreApplication.translate("Form", u"Edit next file", None))
         self.button_change_lyrics.setText(QCoreApplication.translate("Form", u"Change", None))
         self.label_album_artist.setText(QCoreApplication.translate("Form", u"Album Artist:", None))
-        self.label.setText(QCoreApplication.translate("Form", u"Important: Not all file types support every attribute. You'll be able to write them, but if they don't show up after you edited them, it means it's not supported!", None))
         ___qtreewidgetitem = self.treeWidget.headerItem()
         ___qtreewidgetitem.setText(2, QCoreApplication.translate("Form", u"Album", None));
         ___qtreewidgetitem.setText(1, QCoreApplication.translate("Form", u"Artist", None));
@@ -387,6 +389,10 @@ class Ui_Form(object):
         ___qtreewidgetitem1 = self.treeWidget_2.headerItem()
         ___qtreewidgetitem1.setText(1, QCoreApplication.translate("Form", u"Error", None));
         ___qtreewidgetitem1.setText(0, QCoreApplication.translate("Form", u"File", None));
+        self.button_open_file.setText(QCoreApplication.translate("Form", u"Open a file", None))
+        self.button_open_directory.setText(QCoreApplication.translate("Form", u"Open a directory", None))
+        self.button_usage_guide.setText(QCoreApplication.translate("Form", u"Usage Guide", None))
+        self.button_error_log.setText(QCoreApplication.translate("Form", u"Error Log", None))
         self.label_ststus.setText(QCoreApplication.translate("Form", u"Status:", None))
         self.label_update.setText(QCoreApplication.translate("Form", u"Update:", None))
     # retranslateUi
