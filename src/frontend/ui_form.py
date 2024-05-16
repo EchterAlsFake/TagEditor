@@ -17,22 +17,23 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QGridLayout, QGroupBox, QHBoxLayout,
     QHeaderView, QLabel, QLineEdit, QProgressBar,
-    QPushButton, QScrollArea, QSizePolicy, QTreeWidget,
-    QTreeWidgetItem, QVBoxLayout, QWidget)
+    QPushButton, QScrollArea, QSizePolicy, QStackedWidget,
+    QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(1728, 463)
-        self.gridLayout_6 = QGridLayout(Form)
-        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        Form.resize(1708, 495)
+        self.gridLayout_7 = QGridLayout(Form)
+        self.gridLayout_7.setObjectName(u"gridLayout_7")
         self.scrollArea = QScrollArea(Form)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setWidgetResizable(True)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1694, 472))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 1688, 475))
         self.gridLayout_5 = QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.gridLayout_3 = QGridLayout()
@@ -68,6 +69,11 @@ class Ui_Form(object):
         self.button_usage_guide.setObjectName(u"button_usage_guide")
 
         self.horizontalLayout.addWidget(self.button_usage_guide)
+
+        self.button_error_log = QPushButton(self.widget)
+        self.button_error_log.setObjectName(u"button_error_log")
+
+        self.horizontalLayout.addWidget(self.button_error_log)
 
 
         self.gridLayout_4.addLayout(self.horizontalLayout, 0, 0, 1, 1)
@@ -251,10 +257,30 @@ class Ui_Form(object):
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.treeWidget = QTreeWidget(self.widget)
+        self.stackedWidget = QStackedWidget(self.widget)
+        self.stackedWidget.setObjectName(u"stackedWidget")
+        self.page = QWidget()
+        self.page.setObjectName(u"page")
+        self.gridLayout_6 = QGridLayout(self.page)
+        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.treeWidget = QTreeWidget(self.page)
         self.treeWidget.setObjectName(u"treeWidget")
 
-        self.verticalLayout_2.addWidget(self.treeWidget)
+        self.gridLayout_6.addWidget(self.treeWidget, 0, 0, 1, 1)
+
+        self.stackedWidget.addWidget(self.page)
+        self.page_2 = QWidget()
+        self.page_2.setObjectName(u"page_2")
+        self.gridLayout_8 = QGridLayout(self.page_2)
+        self.gridLayout_8.setObjectName(u"gridLayout_8")
+        self.treeWidget_2 = QTreeWidget(self.page_2)
+        self.treeWidget_2.setObjectName(u"treeWidget_2")
+
+        self.gridLayout_8.addWidget(self.treeWidget_2, 0, 0, 1, 1)
+
+        self.stackedWidget.addWidget(self.page_2)
+
+        self.verticalLayout_2.addWidget(self.stackedWidget)
 
 
         self.gridLayout_4.addLayout(self.verticalLayout_2, 1, 0, 1, 1)
@@ -294,13 +320,12 @@ class Ui_Form(object):
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
-        self.gridLayout_6.addWidget(self.scrollArea, 0, 0, 1, 1)
+        self.gridLayout_7.addWidget(self.scrollArea, 0, 0, 1, 1)
 
         QWidget.setTabOrder(self.scrollArea, self.button_open_file)
         QWidget.setTabOrder(self.button_open_file, self.button_open_directory)
         QWidget.setTabOrder(self.button_open_directory, self.button_usage_guide)
-        QWidget.setTabOrder(self.button_usage_guide, self.treeWidget)
-        QWidget.setTabOrder(self.treeWidget, self.lineedit_title)
+        QWidget.setTabOrder(self.button_usage_guide, self.lineedit_title)
         QWidget.setTabOrder(self.lineedit_title, self.lineedit_composer)
         QWidget.setTabOrder(self.lineedit_composer, self.lineedit_artist)
         QWidget.setTabOrder(self.lineedit_artist, self.lineedit_original_artist)
@@ -322,6 +347,9 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
 
+        self.stackedWidget.setCurrentIndex(1)
+
+
         QMetaObject.connectSlotsByName(Form)
     # setupUi
 
@@ -330,6 +358,7 @@ class Ui_Form(object):
         self.button_open_file.setText(QCoreApplication.translate("Form", u"Open a file", None))
         self.button_open_directory.setText(QCoreApplication.translate("Form", u"Open a directory", None))
         self.button_usage_guide.setText(QCoreApplication.translate("Form", u"Usage Guide", None))
+        self.button_error_log.setText(QCoreApplication.translate("Form", u"Error Log", None))
         self.groupBox.setTitle(QCoreApplication.translate("Form", u"Editing...", None))
         self.label_publisher.setText(QCoreApplication.translate("Form", u"Publisher:", None))
         self.label_composer.setText(QCoreApplication.translate("Form", u"Composer:", None))
@@ -355,6 +384,9 @@ class Ui_Form(object):
         ___qtreewidgetitem.setText(2, QCoreApplication.translate("Form", u"Album", None));
         ___qtreewidgetitem.setText(1, QCoreApplication.translate("Form", u"Artist", None));
         ___qtreewidgetitem.setText(0, QCoreApplication.translate("Form", u"Title", None));
+        ___qtreewidgetitem1 = self.treeWidget_2.headerItem()
+        ___qtreewidgetitem1.setText(1, QCoreApplication.translate("Form", u"Error", None));
+        ___qtreewidgetitem1.setText(0, QCoreApplication.translate("Form", u"File", None));
         self.label_ststus.setText(QCoreApplication.translate("Form", u"Status:", None))
         self.label_update.setText(QCoreApplication.translate("Form", u"Update:", None))
     # retranslateUi

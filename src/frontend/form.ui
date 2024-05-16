@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1728</width>
-    <height>463</height>
+    <width>1708</width>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Tag Editor (C) Johannes Habel GPLv3 v1.0 -- Source Code: https://github.com/EchterAlsFake/TagEditor</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_6">
+  <layout class="QGridLayout" name="gridLayout_7">
    <item row="0" column="0">
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1694</width>
-        <height>472</height>
+        <width>1688</width>
+        <height>475</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
@@ -65,6 +65,13 @@
                <widget class="QPushButton" name="button_usage_guide">
                 <property name="text">
                  <string>Usage Guide</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="button_error_log">
+                <property name="text">
+                 <string>Error Log</string>
                 </property>
                </widget>
               </item>
@@ -265,22 +272,51 @@
             <item row="1" column="0">
              <layout class="QVBoxLayout" name="verticalLayout_2">
               <item>
-               <widget class="QTreeWidget" name="treeWidget">
-                <column>
-                 <property name="text">
-                  <string>Title</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Artist</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Album</string>
-                 </property>
-                </column>
+               <widget class="QStackedWidget" name="stackedWidget">
+                <property name="currentIndex">
+                 <number>1</number>
+                </property>
+                <widget class="QWidget" name="page">
+                 <layout class="QGridLayout" name="gridLayout_6">
+                  <item row="0" column="0">
+                   <widget class="QTreeWidget" name="treeWidget">
+                    <column>
+                     <property name="text">
+                      <string>Title</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Artist</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Album</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="page_2">
+                 <layout class="QGridLayout" name="gridLayout_8">
+                  <item row="0" column="0">
+                   <widget class="QTreeWidget" name="treeWidget_2">
+                    <column>
+                     <property name="text">
+                      <string>File</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Error</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -333,7 +369,6 @@
   <tabstop>button_open_file</tabstop>
   <tabstop>button_open_directory</tabstop>
   <tabstop>button_usage_guide</tabstop>
-  <tabstop>treeWidget</tabstop>
   <tabstop>lineedit_title</tabstop>
   <tabstop>lineedit_composer</tabstop>
   <tabstop>lineedit_artist</tabstop>

@@ -37,8 +37,11 @@ def get_audio_file(file_path, file_extension):
         '.mp4': MP4,
         '.aac': MP4,
         '.ogg': OggVorbis,
+        '.oga': OggVorbis,
         '.wma': ASF,
+        '.asf': ASF,
         '.aiff': File,  # Mutagen unterstützt AIFF im Easy-Modus
+        '.aif': File,
         '.ape': File,  # Mutagen unterstützt APE im Easy-Modus
         '.mpc': File,  # Mutagen unterstützt MPC im Easy-Modus
         '.tta': File,  # Mutagen unterstützt TTA im Easy-Modus

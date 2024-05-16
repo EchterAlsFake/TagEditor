@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import src.frontend.ressources
 import os
-import requests
 import argparse
 
 from sys import argv
@@ -25,25 +24,24 @@ from src.frontend.ui_form import Ui_Form
 from src.backend.consts import *
 from src.backend.shared_functions import *
 
-from PySide6.QtCore import (QCoreApplication, QTranslator, QRunnable, QThreadPool, QFile, QTextStream,QObject, Signal,
-                            Qt, QLocale)
-from PySide6.QtWidgets import (QApplication, QWidget, QMessageBox, QFileDialog, QTreeWidgetItem, QDialog,
-                               QVBoxLayout, QTextEdit, QDialogButtonBox)
-from PySide6.QtGui import QTextCursor
+from PySide6.QtCore import (QCoreApplication, QTranslator, QRunnable, QThreadPool, QFile, QTextStream, Qt, QLocale)
+from PySide6.QtWidgets import (QApplication, QWidget, QMessageBox, QFileDialog, QTreeWidgetItem, QDialog)
 
-from mutagen import File
-from mutagen.id3 import ID3, APIC, USLT, Encoding
+
+from requests import get
+from mutagen.id3 import APIC, Encoding
 from mutagen.mp3 import MP3
-from mutagen.id3 import ID3, TIT2, TPE1, TALB, TPE2, TYER, TCON, TRCK, TPUB, TCOM, TOPE, USLT, TPE3, COMM, TDRC, ID3NoHeaderError
+from mutagen.id3 import ID3, USLT
 from mutagen.flac import FLAC, Picture, FLACNoHeaderError, error as flac_error
 from mutagen.mp4 import MP4, MP4Cover
 from mutagen.oggvorbis import OggVorbis
-from mutagen.asf import ASF
 
 __author__ = "Johannes Habel"
 __version__ = "1.0"
 __next_release__ = "1.1"
 __license__ = "GPLv3"
+
+errors = []  # This dictionary saves all files with the error that happened
 
 
 class Setup(QRunnable):
@@ -57,7 +55,7 @@ class Setup(QRunnable):
 
     def run(self):
         try:
-            _ = requests.get(f"https://github.com/EchterAlsFake/TagEditor/releases/{__next_release__}")
+            _ = get(f"https://github.com/EchterAlsFake/TagEditor/releases/{__next_release__}")
 
             if _.status_code == 200:
                 self.signals.signal_update_result.emit(True)
@@ -115,7 +113,8 @@ class ReadTags(QRunnable):
                 file_extension = os.path.splitext(file)[1].lower()
                 tag_mapping = get_tag_mapping(file_extension)
                 if not tag_mapping:
-                    print(f"Unsupported file format: {file}")
+                    _ = {"path": file, "error": "Not supported"}
+                    errors.append(_)
                     continue
 
                 audio = get_audio_file(file, file_extension)
@@ -132,12 +131,14 @@ class ReadTags(QRunnable):
                     self.signals.signal_read_tag.emit(tags)
 
                 else:
-                    print(
-                        f"The file: {file} couldn't be loaded, because it's not supported or contains invalid headers.")
+                    print(f"The file: {file} couldn't be loaded, because it's not supported or contains invalid headers.")
 
-            except Exception as e:
-                print(f"Error reading {file}: {str(e)}")
-                self.signals.signal_error.emit(QCoreApplication.tr(f"Error: File: {file} is broken!", None))
+            except FLACNoHeaderError:
+                _ = {"path": file, "error": "FLAC Header is invalid!"}
+                errors.append(_)
+
+            except flac_error:
+                _ = {"path": file, "error": "FLAC file is corrupted!"}
 
         self.signals.signal_finished.emit()
 
@@ -188,12 +189,17 @@ class TagEditor(QWidget):
         self.ui.button_change_coverart.setStyleSheet(stylesheets["button_blue"])
         self.ui.button_open_directory.setStyleSheet(stylesheets["button_purple"])
         self.ui.progressbar.setStyleSheet(stylesheets["progressbar"])
+        self.ui.stackedWidget.setCurrentIndex(0)
 
         self.header = self.ui.treeWidget.header()
         self.header.resizeSection(0, 300)
         self.header.resizeSection(1, 200)
         self.header.resizeSection(2, 100)
         self.header.resizeSection(3, 100)
+
+        self.header_2 = self.ui.treeWidget_2.header()
+        self.header_2.resizeSection(0, 300)
+        self.header_2.resizeSection(1, 200)
 
     def button_connectors(self):
         self.ui.button_open_file.clicked.connect(self.load_tags_file)
@@ -204,6 +210,7 @@ class TagEditor(QWidget):
         self.ui.button_change_lyrics.clicked.connect(self.add_lyrics)
         self.ui.button_apply.clicked.connect(self.apply_tags)
         self.ui.button_usage_guide.clicked.connect(self.usage_guide)
+        self.ui.button_error_log.clicked.connect(self.switch_errors)
 
     def setup(self):
         self.update_check = Setup()
@@ -245,7 +252,7 @@ class TagEditor(QWidget):
 
     def load_tags_file(self):
         file, type = QFileDialog().getOpenFileName(None, QCoreApplication.tr("Select a music file", None),
-                                                   "", "Audio Files (*.mp3 *.flac *.m4a *.ogg *.oga *.wav"
+                                                   "", "Audio Files (*.mp3 *.flac *.m4a *.ogg *.oga"
                                                        " *.wma *.aiff *.aif *.ape *.mpc *.tta *.ofr *.ofs *.spx *.asf "
                                                        "*.wv *.aac)")
 
@@ -486,7 +493,7 @@ Note: The Lyrics and the Cover Art will be immediately applied, when you select 
 
 Tag Editor supports the following file formats:
 
-MP3,FLAC,M4A,OGG,WAV,WMA,AIFF,APE,MPC,TrueAudio (TTA), OptimFROG, Speex, ASF, WV, AAC
+MP3,FLAC,M4A,OGG,WMA,AIFF,APE,MPC,TrueAudio (TTA), OptimFROG, Speex, ASF, WV, AAC
 
 (and even more...)
 
@@ -506,6 +513,25 @@ e.g,  ffmpeg -i your_file.flac -o fixed_file.flac
 
 (Pretty simple)
 """, None))
+
+    def switch_errors(self):
+        if self.ui.stackedWidget.currentIndex() == 0:
+            self.ui.stackedWidget.setCurrentIndex(1)
+            self.ui.button_error_log.setText(QCoreApplication.tr("Switch Back", None))
+
+        else:
+            self.ui.stackedWidget.setCurrentIndex(0)
+            self.ui.button_error_log.setText(QCoreApplication.tr("Error Log", None))
+
+        print(errors)
+        for error in errors:
+            file = error.get("path")
+            reason = error.get("error")
+            print(file)
+            print(reason)
+            item = QTreeWidgetItem(self.ui.treeWidget_2)
+            item.setText(0, str(file))
+            item.setText(1, str(reason))
 
 
 def main():

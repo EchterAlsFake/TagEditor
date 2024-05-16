@@ -37,9 +37,8 @@
 ## Supported Files
 - MP3 - MPEG-1 Audio Layer III or MPEG-2 Audio Layer III (.mp3)
 - FLAC - Free Lossless Audio Codec (.flac)
-- M4A - MPEG-4 Audio-Files, (.m4a, .mp4)
+- M4A - MPEG-4 Audio-Files, .m4a
 - OGG - (.ogg, .oga)
-- WAV - Waveform Audio File Format (.wav)
 - WMA - Windows Media Audio files (.wma)
 - AIFF - Audio Interchange File Format, (.aiff, .aif)
 - APE - Monkey’s Audio, (.ape)
