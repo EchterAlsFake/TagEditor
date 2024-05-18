@@ -29,6 +29,7 @@ from PySide6.QtWidgets import (QApplication, QWidget, QMessageBox, QFileDialog, 
 
 
 from requests import get
+from mutagen.mp4 import MP4StreamInfoError
 from mutagen.id3 import APIC, Encoding
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, USLT
@@ -89,6 +90,7 @@ class LoadFiles(QRunnable):
         self.signals.signal_start_undefined_range.emit()
         for root, dirs, files in os.walk(self.directory):
             for file in files:
+                print(f"File: {file}")
                 if not file.endswith(tuple(invalid_extensions)):  # Checks if a file has an invalid extension
                     full_path = os.path.join(root, file)
                     files_.append(full_path)
@@ -113,6 +115,7 @@ class ReadTags(QRunnable):
         total_length = len(files)
 
         for idx, file in enumerate(files):
+            print(f"Loading file: {file}")
             try:
                 file_extension = os.path.splitext(file)[1].lower()  # Gets the file extension
                 tag_mapping = get_tag_mapping(file_extension)
@@ -144,6 +147,9 @@ class ReadTags(QRunnable):
 
             except flac_error:
                 _ = {"path": file, "error": "FLAC file is corrupted!"}
+
+            except MP4StreamInfoError:
+                _ = {"path": file, "error": "not a valid MP4 file"}
 
         self.signals.signal_finished.emit()
 
@@ -394,13 +400,13 @@ class TagEditor(QWidget):
                 if file_extension == '.mp3':
                     audio.add(frame(encoding=Encoding.UTF8, text=value))
                 else:
-                    audio[frame] = value
+                    print(frame)
+                    audio[frame] = str(value)
 
         if file_extension == '.mp3':
             audio.save(v2_version=3)  # Save as ID3v2.3
         else:
             audio.save()
-
         self.ui.lineedit_status.setText(QCoreApplication.tr("Tags have been written: ✔", ""))
 
     def select_cover_art(self):

@@ -34,7 +34,7 @@
 - Cross-Platform Graphical User Interface
 - Easy to use user interface
 
-## Supported Files
+## Supported Files (In theory)
 - MP3 - MPEG-1 Audio Layer III or MPEG-2 Audio Layer III (.mp3)
 - FLAC - Free Lossless Audio Codec (.flac)
 - M4A - MPEG-4 Audio-Files, .m4a
@@ -49,6 +49,22 @@
 - ASF - Advanced Systems Format (.asf)
 - WV (WavPack) (.wv)
 - AAC - Advanced Audio Coding (.aac)
+
+## Supported Files (Tested)
+- [x] MP3
+- [x] FLAC
+- [] M4A
+- [x] OGG
+- [] WMA
+- [] AIFF
+- [x] APE
+- [x] MPC
+- [] TTA
+- [] OFR
+- [] SPX
+- [] ASF
+- [x] WV
+- [] AAC
 
 ## Supported Tags
 - Title, Artist, Album, Albumartist, Year, Genre
