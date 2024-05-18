@@ -71,6 +71,10 @@ class Setup(QRunnable):
 
 
 class LoadFiles(QRunnable):
+    """
+    This class loads all files from a directory and its subdirectories.
+    It makes sure to only load music files and to skip unnecessary files like album covers or logs.
+    """
     def __init__(self, directory):
         super(LoadFiles, self).__init__()
         self.directory = directory
@@ -80,17 +84,17 @@ class LoadFiles(QRunnable):
         files_ = []
         invalid_extensions = [".jpg", ".jpeg", ".png", ".cue", ".mov", ".log", ".m3u", ".txt", ".mp4", ".JPG", ".mkv"
                               ".nfo", ".CUE", ".LOG", ".M3U", ".gif", ".pdf", ".clpi", ".mpls", ".m2ts", ".bdmv", ".iso",
-                              ".xml", ".sqlite", "nfo", ".sfv"]
+                              ".xml", ".sqlite", "nfo", ".sfv"]  # Ignore these files
 
         self.signals.signal_start_undefined_range.emit()
         for root, dirs, files in os.walk(self.directory):
             for file in files:
-                if not file.endswith(tuple(invalid_extensions)):
+                if not file.endswith(tuple(invalid_extensions)):  # Checks if a file has an invalid extension
                     full_path = os.path.join(root, file)
                     files_.append(full_path)
 
-        self.signals.signal_get_files.emit(files_)
-        self.signals.signal_stop_undefined_range.emit()
+        self.signals.signal_get_files.emit(files_)  # Emits the path of all files to the main GUI thread
+        self.signals.signal_stop_undefined_range.emit()  # Stops the loading animation
 
 
 class ReadTags(QRunnable):
@@ -102,7 +106,7 @@ class ReadTags(QRunnable):
         self.is_directory = is_directory
         self.tags_to_extract = [
             'title', 'artist', 'album', 'albumartist', 'date', 'genre', 'tracknumber', 'publisher', 'composer',
-            'originalartist', 'lyrics', 'conductor', 'comments']
+            'originalartist', 'lyrics', 'conductor', 'comments']  # These are the tags I want to extract
 
     def run(self):
         files = [self.file] if not self.is_directory else self.file
@@ -110,14 +114,14 @@ class ReadTags(QRunnable):
 
         for idx, file in enumerate(files):
             try:
-                file_extension = os.path.splitext(file)[1].lower()
+                file_extension = os.path.splitext(file)[1].lower()  # Gets the file extension
                 tag_mapping = get_tag_mapping(file_extension)
                 if not tag_mapping:
-                    _ = {"path": file, "error": "Not supported"}
+                    _ = {"path": file, "error": "Not supported"}  # Appends the invalid file to the list of errors
                     errors.append(_)
                     continue
 
-                audio = get_audio_file(file, file_extension)
+                audio = get_audio_file(file, file_extension)  # Gets the audio object from Mutagen
                 if audio:
                     tags = {}
                     for tag in self.tags_to_extract:
@@ -125,12 +129,12 @@ class ReadTags(QRunnable):
                         if tag_name:
                             tags[tag] = audio.get(tag_name, [''])[0]
 
-                    title = tags['title'] if tags['title'] else os.path.splitext(os.path.basename(file))[0]
-                    tags.update({'title': title, 'idx': idx, "file_path": file})
+                    title = tags['title'] if tags['title'] else os.path.splitext(os.path.basename(file))[0]  # Uses the title from the filename instead of a hardcoded one, because some files might not have one.
+                    tags.update({'title': title, 'idx': idx, "file_path": file})  # Adds path and index
                     self.signals.signal_progress.emit(idx, total_length)
                     self.signals.signal_read_tag.emit(tags)
 
-                else:
+                else:  # If no audio object was created, the file is either invalid or not supported
                     print(
                         f"The file: {file} couldn't be loaded, because it's not supported or contains invalid headers.")
 
@@ -194,7 +198,7 @@ class TagEditor(QWidget):
         self.ui.stackedWidget.setCurrentIndex(0)
 
         self.header = self.ui.treeWidget.header()
-        self.header.resizeSection(0, 300)
+        self.header.resizeSection(0, 300)  # Resizes the headers of the tree widget
         self.header.resizeSection(1, 200)
         self.header.resizeSection(2, 100)
         self.header.resizeSection(3, 100)
@@ -204,6 +208,7 @@ class TagEditor(QWidget):
         self.header_2.resizeSection(1, 200)
 
     def button_connectors(self):
+        """Connects the buttons to their functions"""
         self.ui.button_open_file.clicked.connect(self.load_tags_file)
         self.ui.button_open_directory.clicked.connect(self.load_tags_directory)
         self.ui.treeWidget.itemClicked.connect(self.edit_tags)
@@ -215,11 +220,13 @@ class TagEditor(QWidget):
         self.ui.button_error_log.clicked.connect(self.switch_errors)
 
     def setup(self):
+        """Starts the thread for update checking"""
         self.update_check = Setup()
         self.update_check.signals.signal_update_result.connect(self.update_result)
         self.threadpool.start(self.update_check)
 
     def update_result(self, value):
+        """Receives the update result and updates the lineedit accordingly"""
         found = QCoreApplication.tr( f"Version: {__next_release__} is out!", None)
         not_found = QCoreApplication.tr( f"No update was found...", None)
 
@@ -230,29 +237,36 @@ class TagEditor(QWidget):
             self.ui.lineedit_update.setText(not_found)
 
     def start_undefined_range(self):
+        """Starts a loading animation"""
         self.ui.progressbar.setRange(0, 0)
 
     def stop_undefined_range(self):
+        """Stops the loading animations"""
         self.ui.progressbar.setRange(0, 1)
 
     def update_progressbar(self, pos, total):
+        """Updates the progressbar with current progress and maximum progress"""
         self.ui.progressbar.setValue(pos)
         self.ui.progressbar.setMaximum(total)
 
     def on_error(self, e):
+        """If there's an error, it will be shown to the user"""
         self.ui_popup(e)
 
     def edit_next(self):
+        """Selects the next file (based on index) so that a user can edit it"""
         self.last_index += 1
         self.edit_tags(item=self.ui.treeWidget.topLevelItem(self.last_index))
 
     def finished(self):
+        """Starts editing the first item, when loading metadata is finished"""
         self.ui.progressbar.setValue(0)
         self.ui.progressbar.setMaximum(100)
         self.edit_tags(item=self.ui.treeWidget.topLevelItem(0))
         self.ui.lineedit_status.clear()
 
     def load_tags_file(self):
+        """Lets the user select a file for editing the tags"""
         file, type = QFileDialog().getOpenFileName(None, QCoreApplication.tr("Select a music file", None),
                                                    "", "Audio Files (*.mp3 *.flac *.m4a *.ogg *.oga"
                                                        " *.wma *.aiff *.aif *.ape *.mpc *.tta *.ofr *.ofs *.spx *.asf "
@@ -265,6 +279,7 @@ class TagEditor(QWidget):
         self.load_tags(path=file, is_directory=False)
 
     def load_tags_directory(self):
+        """Lets the user select a directory for editing the tags"""
         directory = QFileDialog().getExistingDirectory()
         self.ui.lineedit_status.setText("Loading Files...")
         self.load_files_thread = LoadFiles(directory)
@@ -274,10 +289,12 @@ class TagEditor(QWidget):
         self.threadpool.start(self.load_files_thread)
 
     def receive_files(self, files):
+        """Receives the files from the LoafFiles threading class"""
         self.load_tags(path=files, is_directory=True)
         self.ui.lineedit_status.setText("Finished Loading files, loading Tags...")
 
     def load_tags(self, path, is_directory):
+        """Starts the thread for loading the metadata of all files"""
         self.read_tags_thread = ReadTags(file=path, is_directory=is_directory)
         self.read_tags_thread.signals.signal_read_tag.connect(self.read_tags_signal)
         self.read_tags_thread.signals.signal_progress.connect(self.update_progressbar)
@@ -285,6 +302,7 @@ class TagEditor(QWidget):
         self.threadpool.start(self.read_tags_thread)
 
     def read_tags_signal(self, data):
+        """ Receives the data loaded by the metadata threading class and creates a new TreeWidgetItem with its index """
         title = data.get("title")
         artist = data.get("artist")
         album = data.get("album")
@@ -323,6 +341,7 @@ class TagEditor(QWidget):
         item.setData(13, Qt.UserRole, str(path))
 
     def edit_tags(self, item):
+        """Loads the tags from the saved data of a tree item and applies its values to the lineedits"""
         self.current_item = item
         self.last_index = self.ui.treeWidget.indexOfTopLevelItem(item)
         self.ui.lineedit_title.setText(item.data(0, Qt.UserRole))
@@ -339,6 +358,7 @@ class TagEditor(QWidget):
         self.ui.lineedit_comments.setText(item.data(12, Qt.UserRole))
 
     def apply_tags(self):
+        """Applies the values from all line edits to the file"""
         TagEditor.tags_to_be_written = {
             "title": self.ui.lineedit_title.text(),
             "artist": self.ui.lineedit_artist.text(),
@@ -380,6 +400,7 @@ class TagEditor(QWidget):
             audio.save(v2_version=3)  # Save as ID3v2.3
         else:
             audio.save()
+
         self.ui.lineedit_status.setText(QCoreApplication.tr("Tags have been written: ✔", ""))
 
     def select_cover_art(self):
@@ -511,12 +532,13 @@ If this occurs, I recommend you to use a tool called ffmpeg, to re-encode the fi
 ensures that the file headers are correct.
 
 
-e.g,  ffmpeg -i your_file.flac -o fixed_file.flac
+e.g,  ffmpeg -i your_file.flac fixed_file.flac
 
 (Pretty simple)
 """, None))
 
     def switch_errors(self):
+        """Switches to the error tab of the tree widget"""
         if self.ui.stackedWidget.currentIndex() == 0:
             self.ui.stackedWidget.setCurrentIndex(1)
             self.ui.button_error_log.setText(QCoreApplication.tr("Switch Back", None))
@@ -537,6 +559,7 @@ e.g,  ffmpeg -i your_file.flac -o fixed_file.flac
 
 
 def main():
+    """The main function for handling language and UI startup"""
     parser = argparse.ArgumentParser()
     parser.add_argument("-fe", "--force_english", action="store_true",
                         help="Forces the application to load in english language")
