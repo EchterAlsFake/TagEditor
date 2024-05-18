@@ -9,147 +9,152 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="53"/>
+        <location filename="../form.ui" line="305"/>
         <source>Open a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="60"/>
+        <location filename="../form.ui" line="315"/>
         <source>Open a directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="67"/>
+        <location filename="../form.ui" line="325"/>
         <source>Usage Guide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="76"/>
-        <source>Editing...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../form.ui" line="87"/>
+        <location filename="../form.ui" line="51"/>
         <source>Publisher:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="100"/>
+        <location filename="../form.ui" line="64"/>
         <source>Composer:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="107"/>
+        <location filename="../form.ui" line="71"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="123"/>
+        <location filename="../form.ui" line="87"/>
         <source>Artist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="130"/>
+        <location filename="../form.ui" line="94"/>
         <source>Title:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="137"/>
+        <location filename="../form.ui" line="101"/>
         <source>Genre:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="144"/>
+        <location filename="../form.ui" line="108"/>
         <source>Comments:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="151"/>
+        <location filename="../form.ui" line="115"/>
         <source>Original Artist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="164"/>
+        <location filename="../form.ui" line="128"/>
         <source>Year:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="174"/>
+        <location filename="../form.ui" line="138"/>
         <source>Cover Art:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="181"/>
+        <location filename="../form.ui" line="145"/>
         <source>Album:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="188"/>
+        <location filename="../form.ui" line="152"/>
         <source>Lyrics:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="195"/>
+        <location filename="../form.ui" line="162"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="202"/>
+        <location filename="../form.ui" line="169"/>
         <source>Conductor:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="212"/>
+        <location filename="../form.ui" line="179"/>
         <source>Track Number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="219"/>
+        <location filename="../form.ui" line="189"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="226"/>
+        <location filename="../form.ui" line="199"/>
         <source>Edit next file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="242"/>
+        <location filename="../form.ui" line="218"/>
         <source>Change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="249"/>
+        <location filename="../form.ui" line="225"/>
         <source>Album Artist:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="256"/>
-        <source>Important: Not all file types support every attribute. You&apos;ll be able to write them, but if they don&apos;t show up after you edited them, it means it&apos;s not supported!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../form.ui" line="271"/>
+        <location filename="../form.ui" line="258"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="276"/>
+        <location filename="../form.ui" line="263"/>
         <source>Artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="281"/>
+        <location filename="../form.ui" line="268"/>
         <source>Album</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="293"/>
+        <location filename="../form.ui" line="281"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../form.ui" line="286"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../form.ui" line="335"/>
+        <source>Error Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../form.ui" line="346"/>
         <source>Status:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../form.ui" line="307"/>
+        <location filename="../form.ui" line="363"/>
         <source>Update:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -157,37 +162,37 @@
 <context>
     <name>QCoreApplication</name>
     <message>
-        <location filename="../../../main.py" line="135"/>
-        <source>Error: File: {file} is broken!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../../main.py" line="239"/>
+        <location filename="../../../main.py" line="231"/>
         <source>Version: {__next_release__} is out!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="241"/>
+        <location filename="../../../main.py" line="233"/>
         <source>No update was found...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="271"/>
+        <location filename="../../../main.py" line="270"/>
         <source>Select a music file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="381"/>
+        <location filename="../../../main.py" line="387"/>
+        <source>Error loading file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../main.py" line="404"/>
         <source>Tags have been written: ✔</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="385"/>
+        <location filename="../../../main.py" line="408"/>
         <source>Select Cover Art</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="515"/>
+        <location filename="../../../main.py" line="538"/>
         <source>
 Click on &apos;Open File&apos; to open a music file or &apos;Open Directory&apos; to open a directory (and their subdirectories).
 All files found will be listed in the tree widget (the thing in the left).
@@ -197,7 +202,7 @@ Note: The Lyrics and the Cover Art will be immediately applied, when you select 
 
 Tag Editor supports the following file formats:
 
-MP3,FLAC,M4A,OGG,WAV,WMA,AIFF,APE,MPC,TrueAudio (TTA), OptimFROG, Speex, ASF, WV, AAC
+MP3,FLAC,M4A,OGG,WMA,AIFF,APE,MPC,TrueAudio (TTA), OptimFROG, Speex, ASF, WV, AAC
 
 (and even more...)
 
@@ -213,31 +218,42 @@ If this occurs, I recommend you to use a tool called ffmpeg, to re-encode the fi
 ensures that the file headers are correct.
 
 
-e.g,  ffmpeg -i your_file.flac -o fixed_file.flac
+e.g,  ffmpeg -i your_file.flac fixed_file.flac
 
 (Pretty simple)
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="277"/>
-        <location filename="../../../main.py" line="391"/>
+        <location filename="../../../main.py" line="544"/>
+        <source>Switch Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../main.py" line="548"/>
+        <source>Error Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../../main.py" line="276"/>
+        <location filename="../../../main.py" line="414"/>
         <source>No file was selected...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="405"/>
+        <location filename="../../../main.py" line="428"/>
         <source>
 Unsupported file format!, only mp3, flac and m4a support&quot; &quot;cover images!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="472"/>
+        <location filename="../../../main.py" line="382"/>
+        <location filename="../../../main.py" line="495"/>
         <source>Unsupported file format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../../main.py" line="477"/>
+        <location filename="../../../main.py" line="500"/>
         <source>Lyrics have been updated. Please note, that not all audio codecs support embedded lyrics.</source>
         <translation type="unfinished"></translation>
     </message>
