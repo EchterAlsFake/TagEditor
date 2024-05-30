@@ -53,7 +53,7 @@
 ## Supported Files (Tested)
 - [x] MP3
 - [x] FLAC
-- [] M4A
+- [x] M4A
 - [x] OGG
 - [] WMA
 - [] AIFF

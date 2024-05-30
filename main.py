@@ -397,11 +397,23 @@ class TagEditor(QWidget):
         for tag, frame in tag_mapping.items():
             value = TagEditor.tags_to_be_written.get(tag)
             if value:
-                if file_extension == '.mp3':
-                    audio.add(frame(encoding=Encoding.UTF8, text=value))
-                else:
-                    print(frame)
-                    audio[frame] = str(value)
+                try:
+                    if file_extension == '.mp3':
+                        audio.add(frame(encoding=Encoding.UTF8, text=value))
+                    else:
+                        if tag == "tracknumber":
+                            track_info = value.split('/')
+                            track_number = int(track_info[0])
+                            total_tracks = int(track_info[1]) if len(track_info) > 1 else 0
+                            audio[frame] = [(track_number, total_tracks)]
+                            # Some tags like MP4 expect ... / total track number, but sometimes
+                            # this isn't provided, so it would raise an error. This is expected
+                            # and not really a bad error. Just can just ignore that :)
+
+                        else:
+                            audio[frame] = str(value)
+                except ValueError as e:
+                    print(f"Error processing tag {tag} with value {value}: {e}")
 
         if file_extension == '.mp3':
             audio.save(v2_version=3)  # Save as ID3v2.3

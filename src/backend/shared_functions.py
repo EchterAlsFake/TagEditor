@@ -34,7 +34,7 @@ def get_tag_mapping(file_extension):
 def get_audio_file(file_path, file_extension):
     audio_classes = {
         '.mp3': ID3,
-        '.flac': FLAC,
+        '.flac': MP4,
         '.m4a': MP4,
         '.mp4': MP4,
         '.aac': MP4,
