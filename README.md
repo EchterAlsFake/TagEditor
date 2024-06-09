@@ -7,11 +7,11 @@
 
 
 > [!IMPORTANT]
-> Still in development, do not use yet!
+> Still in development, first BETA is released now :) 
 
 ---
 
-**[<kbd><strong>&nbsp;<br>&nbsp;Download (v1.0)&nbsp;<br>&nbsp;</strong></kbd>](https://github.com/EchterAlsFake/TagEditor/releases/tag/1.0)** 
+**[<kbd><strong>&nbsp;<br>&nbsp;Download (v1.0 - BETA)&nbsp;<br>&nbsp;</strong></kbd>](https://github.com/EchterAlsFake/TagEditor/releases/tag/v1.0-automated-0547c9a)** 
 **[<kbd><strong>&nbsp;<br>&nbsp;Screenshots&nbsp;<br>&nbsp;</strong></kbd>](https://github.com/EchterAlsFake/TagEditor/blob/master/README/SCREENSHOTS.md)** 
 **[<kbd><strong>&nbsp;<br>&nbsp;Changelog&nbsp;<br>&nbsp;</strong></kbd>](https://github.com/EchterAlsFake/TagEditor/blob/master/README/CHANGELOG.md)** 
 **[<kbd><strong>&nbsp;<br>&nbsp;Development Status&nbsp;<br>&nbsp;</strong></kbd>](https://github.com/EchterAlsFake/TagEditor/blob/master/README/STATUS.md)** 
