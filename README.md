@@ -1,3 +1,6 @@
+> [!WARNING]
+> This project is currently abondened and I have no priority for it right now, HOWEVER I definitely plan on coming back to this and bringing it to life. If you have ideas, feel free to open the discussion :) 
+
 <h1 align="center">Tag Editor - Open-Source Music Metadata Editor</h1>
 <a href="https://github.com/EchterAlsFake/TagEditor/actions/workflows/build_gui_windows.yml"><img src="https://github.com/EchterAlsFake/TagEditor/actions/workflows/build_gui_windows.yml/badge.svg" alt="Build GUI Windows Status"/></a>
 <a href="https://github.com/EchterAlsFake/TagEditor/actions/workflows/build_gui_linux.yml"><img src="https://github.com/EchterAlsFake/TagEditor/actions/workflows/build_gui_linux.yml/badge.svg" alt="Build GUI Linux Status"/></a>
